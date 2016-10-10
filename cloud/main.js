@@ -1,13 +1,13 @@
-﻿var MonextAPI = require("cloud/monextAPI");
-var Utils = require("cloud/utils");
+﻿var MonextAPI = require("./cloud/monextAPI");
+var Utils = require("./cloud/utils");
 //var _ = require('underscore');
 //var fs = require('fs');
 //var Mailgun = require('mailgun');
 //var moment = require('moment');
 
 // load languages
-var fr = require('cloud/i18n/fr')
-var en = require('cloud/i18n/en')
+var fr = require('./cloud/i18n/fr')
+var en = require('./cloud/i18n/en')
 
 Parse.Cloud.define("checkauth", function(request, response) {
     if (!request.params.username || !request.params.password) {
