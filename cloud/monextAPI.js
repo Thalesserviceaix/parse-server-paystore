@@ -56,6 +56,7 @@
             login: function (username, password) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
+                    useMasterKey : true,
                     headers: self.getCommonHeaders(),
                     body: {
                         "Login"   : username,

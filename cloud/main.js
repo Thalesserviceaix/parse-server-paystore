@@ -175,7 +175,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
     res.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not enought to proceed
   }
 
-  Parse.Cloud.useMasterKey();
+  //Parse.Cloud.useMasterKey();
 
   var username = request.params.username;
   var password = request.params.password;
