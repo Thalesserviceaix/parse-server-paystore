@@ -1,13 +1,13 @@
-var MonextAPI = require("./cloud/monextAPI");
-var Utils = require("./cloud/utils");
+var MonextAPI = require("./monextAPI.js");
+var Utils = require("./utils");
 var _ = require('underscore');
 var fs = require('fs');
-var Mailgun = require('mailgun-js');
+var Mailgun = require('mailgun-js')({apiKey: 'key-ffff71fcee9784638da21c7f37207ab5', domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'});
 var moment = require('moment');
 
 // load languages
-var fr = require('./cloud/i18n/fr');
-var en = require('./cloud/i18n/en');
+var fr = require('./i18n/fr');
+var en = require('./i18n/en');
 
 Parse.Cloud.define("checkauth", function(request, response) {
   if (!request.params.username || !request.params.password) {
@@ -517,7 +517,7 @@ Parse.Cloud.beforeDelete("PaymentMode", function (request, response) {
   });
 });
 
-Mailgun.initialize('sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org', 'key-ffff71fcee9784638da21c7f37207ab5');
+// Mailgun.initialize('sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org', 'key-ffff71fcee9784638da21c7f37207ab5');
 Parse.Cloud.define('SendEmail', function (request, response) {
   var tid   = request.params.tid;
   var to    = request.params.to;
@@ -591,7 +591,7 @@ Parse.Cloud.define('SendEmail', function (request, response) {
         });
       }
 
-      var template = fs.readFileSync('./cloud/templates/receipt.js', 'utf8');
+      var template = fs.readFileSync('./templates/receipt.js', 'utf8');
       var template_to_compile = _.template(template);
       var html = template_to_compile({
         image:          image,
@@ -820,7 +820,7 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
     return;
   }
 
-  var template = fs.readFileSync('./cloud/templates/contact.js', 'utf8');
+  var template = fs.readFileSync('./templates/contact.js', 'utf8');
   var template_to_compile = _.template(template);
   var html = template_to_compile({
     username: username,
@@ -842,7 +842,7 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
   });
 });
 
-var Transaction = require('./cloud/transaction');
+var Transaction = require('./transaction');
 Parse.Cloud.afterSave('Transaction', function (request) {
   console.log(request);
 
@@ -872,7 +872,7 @@ Parse.Cloud.afterSave('Transaction', function (request) {
   });
 });
 
-var TransactionCancel = require('./cloud/transaction-cancel');
+var TransactionCancel = require('./transaction-cancel');
 Parse.Cloud.afterSave('TransactionCancel', function (request) {
   console.log(request);
 
@@ -902,7 +902,7 @@ Parse.Cloud.afterSave('TransactionCancel', function (request) {
   });
 });
 
-var TransactionCredit = require('./cloud/transaction-credit');
+var TransactionCredit = require('./transaction-credit');
 Parse.Cloud.afterSave('TransactionCredit', function (request) {
   console.log(request);
 
