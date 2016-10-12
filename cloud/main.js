@@ -46,7 +46,7 @@ Parse.Cloud.define("checkauth", function(request, response) {
 
     return response.UserRef;
   }).then(function (userRef) {
-    return new Parse.Query("_User").equalTo("username", username).first()
+    return new Parse.Query("_User").equalTo("username", username).first({useMasterKey:true})
   }).then(function (user) {
     user.set("nepToken", nepToken)
 
@@ -214,7 +214,9 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       Parse.Promise.as(monextUser),
       MonextAPI.Merchant.findByRef(monextUser.Users[0].MerchantRef)
     ]);
-  }).then(function (monextUser, monextMerchant) {
+  }).then(function (data) {
+    var monextUser = data[0];
+    var monextMerchant = data[1];
     console.log("Monext user: ");
     console.log(monextUser);
 
@@ -257,15 +259,15 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       var street = params.street
       var number = params.number
 
-      return new Parse.Query("Contrat").equalTo("contractId", id).first().then(function (contract) {
+      return new Parse.Query("Contrat").equalTo("contractId", id).first({useMasterKey:true}).then(function (contract) {
         if (contract) {
           var adminRoleName = 'admin_' + id;
           var commerceRoleName = 'commerce_' + id;
 
           return Parse.Promise.when([
             contract,
-            new Parse.Query("_Role").equalTo("name", adminRoleName).first(), // Should alway return a role, not null
-            new Parse.Query("_Role").equalTo("name", commerceRoleName).first()  // Should alway return a role, not null
+            new Parse.Query("_Role").equalTo("name", adminRoleName).first({useMasterKey:true}), // Should alway return a role, not null
+            new Parse.Query("_Role").equalTo("name", commerceRoleName).first({useMasterKey:true})  // Should alway return a role, not null
           ]);
         }
 
@@ -278,7 +280,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
         newContract.set("street", street);
         newContract.set("number", number);
 
-        return newContract.save().then(function () {
+        return newContract.save(newContract.get('data'),{useMasterKey:true}).then(function () {
 
           console.log("contract: ", newContract);
 
@@ -309,7 +311,18 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
             Parse.Promise.as(newContract),
             roles.admin.save().then(function () { return roles.admin }),
             roles.commerce.save().then(function () { return roles.commerce })
-          ]).then(function (contract, adminRole, commerceRole) {
+          ]).then(function (data) {
+
+            var contract = data[0];
+            var adminRole = data[1];
+            var commerceRole = data[2];
+            console.log("contract: ");
+            console.log(contract);
+            console.log("adminRole");
+            console.log(adminRole);
+            console.log("commerceRole");
+            console.log(commerceRole);
+
             var contractACL = new Parse.ACL();
             contractACL.setRoleReadAccess(adminRole, true);
             contractACL.setRoleWriteAccess(adminRole, true);
@@ -335,23 +348,26 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       var firstname = params.firstname;
       var lastname  = params.lastname;
 
-      return new Parse.Query("_User").equalTo("username", username).first().then(function (user) {
+      return new Parse.Query("_User").equalTo("username", username).first({useMasterKey:true}).then(function (user) {
 
 
         console.log("findOrCreateUser, tmp pwd? " + MonextAPI.isTmpPassword());
 
+        var randomPassword = 'youhou';
         if (user) {
           console.log("found user:");
           console.log(user);
 
-          var randomPassword = Utils.StringGenerator.getString();
+          //var randomPassword = Utils.StringGenerator.getString();
           user.set("password",  randomPassword);
           user.set("firstname", firstname);
-          user.set("lastname",  lastname);
+          user.set("lastname",  lastname+" moi");
           user.set("tmpPassword", MonextAPI.isTmpPassword());
           console.log('nepToken to be saved: ' + nepToken);
           user.set("nepToken", nepToken);
-          return user.save().then(function () {
+
+          // return user.save(user.get('data'),/*{useMasterKey:true}*/{sessionToken:user._sessionToken}).then(function () {
+          return user.save(user.get('data'),/*{useMasterKey:true}*/{useMasterKey:true}).then(function () {
             return Parse.User.logIn(user.get("username"), randomPassword);
           }).then(function (user_loggedin) {
             console.log("current user session token:");
@@ -360,7 +376,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
           });
         }
 
-        return Parse.User.signUp(username, Utils.StringGenerator.getString(15)).then(function (newUser) {
+        return Parse.User.signUp(username, randomPassword).then(function (newUser) {
           console.log("created user:");
           console.log(newUser);
 
@@ -370,7 +386,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
           console.log('nepToken to be saved: ' + nepToken);
           newUser.set("nepToken", nepToken);
 
-          return newUser.save().then(function () {
+          return newUser.save(null,{useMasterKey:true}).then(function () {
             return newUser;
           });
         });
@@ -386,7 +402,10 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       city:   monextMerchant.POSAddress.Locality,
       street: monextMerchant.POSAddress.StreetName,
       number: monextMerchant.POSAddress.StreetNumber
-    }).then(function (contract, adminRole, commerceRole) {
+    }).then(function (data) {
+      var contract = data[0];
+      var adminRole = data[1];
+      var commerceRole = data[2];
       console.log("contract: ");
       console.log(contract);
       console.log("adminRole");
@@ -412,10 +431,10 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
           commerceRole.getUsers().add(user);
         }
 
-        return Parse.Object.saveAll([adminRole, commerceRole]).then(function (rolesAgain) {
+        return Parse.Object.saveAll([adminRole, commerceRole],{sessionToken:user.getSessionToken()}).then(function (rolesAgain) {
 
           var updateRole = function (roleName, roleToAdd) {
-            return new Parse.Query("_Role").equalTo("name", roleName).first({ useMasterKey: true }).then(function (role) {
+            return new Parse.Query("_Role").equalTo("name", roleName).first({sessionToken:user.getSessionToken()}).then(function (role) {
               var relation = role.relation("roles");
               relation.add([roleToAdd]);
 
