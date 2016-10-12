@@ -69,7 +69,7 @@
                     console.log("-----");
                     
 
-                    self.setSessionId(monextResponse.headers.SESSIONID);
+                    self.setSessionId(monextResponse.headers.sessionid);
                     self.setUserName(username);
                     self.setPassword(password);
                     self.setTmpPassword(monextResponse.data.IsTemporaryPassword);
@@ -82,6 +82,7 @@
             findByRef: function (userRef) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
+                    useMasterKey : true,
                     headers: self.getAuthenticatedHeaders(),
                     body: {
                         "UserRef": userRef
@@ -162,7 +163,7 @@
                     },
                     url: self._getLongUrl("DoLogin")
                 }).then(function (monextResponse) {
-		    self.setSessionId(monextResponse.headers.SESSIONID);
+		    self.setSessionId(monextResponse.headers.sessionid);
                     return Parse.Cloud.httpRequest({
             			method: "POST",
             			headers: self.getAuthenticatedHeaders(),
