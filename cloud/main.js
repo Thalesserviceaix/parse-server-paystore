@@ -252,6 +252,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
 
     // return an array:[contract, adminRole, commerceRole]
     var findOrCreateContract = function (id, params) {
+      console.log('>findOrCreateContract');
       var params = params || {};
       var name   = params.name;
       var city   = params.city
@@ -342,6 +343,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
     };
 
     var findOrCreateUser = function (params) {
+      console.log('>findOrCreateUser');
       var params = params || {}
 
       var username  = params.username;
@@ -351,19 +353,19 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       return new Parse.Query("_User").equalTo("username", username).first({useMasterKey:true}).then(function (user) {
 
 
-        console.log("findOrCreateUser, tmp pwd? " + MonextAPI.isTmpPassword());
+        console.log("findOrCreateUser | tmp pwd? " + MonextAPI.isTmpPassword());
 
         var randomPassword = 'youhou';
         if (user) {
-          console.log("found user:");
+          console.log("findOrCreateUser | found user:");
           console.log(user);
 
           //var randomPassword = Utils.StringGenerator.getString();
           user.set("password",  randomPassword);
           user.set("firstname", firstname);
-          user.set("lastname",  lastname+" moi");
+          user.set("lastname",  lastname);
           user.set("tmpPassword", MonextAPI.isTmpPassword());
-          console.log('nepToken to be saved: ' + nepToken);
+          console.log('findOrCreateUser | found user | nepToken to be saved: ', nepToken);
           user.set("nepToken", nepToken);
 
           // return user.save(user.get('data'),/*{useMasterKey:true}*/{sessionToken:user._sessionToken}).then(function () {
@@ -377,16 +379,18 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
         }
 
         return Parse.User.signUp(username, randomPassword).then(function (newUser) {
-          console.log("created user:");
-          console.log(newUser);
+          console.log("findOrCreateUser | created user");
+          console.log("findOrCreateUser | created user | newUser",newUser);
 
+          newUser.set("password",  randomPassword);
           newUser.set("firstname", firstname);
           newUser.set("lastname",  lastname);
           newUser.set("tmpPassword", MonextAPI.isTmpPassword());
-          console.log('nepToken to be saved: ' + nepToken);
+          console.log('findOrCreateUser | created user | nepToken to be saved: ',nepToken);
           newUser.set("nepToken", nepToken);
 
-          return newUser.save(null,{useMasterKey:true}).then(function () {
+          return newUser.save(newUser.get('data'),{useMasterKey:true}).then(function () {
+            console.log('findOrCreateUser | created user | return ',newUser);
             return newUser;
           });
         });
@@ -395,7 +399,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
 
     console.log("Using company name: ");
     console.log(monextMerchant.CompanyName);
-    console.log(monextMerchant['CompanyName']);
+
     return findOrCreateContract(contractId, {
       name:   monextMerchant.CompanyName,
       zip:    monextMerchant.POSAddress.ZipCode,
@@ -403,21 +407,20 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       street: monextMerchant.POSAddress.StreetName,
       number: monextMerchant.POSAddress.StreetNumber
     }).then(function (data) {
+      console.log('findOrCreateContract | then');
       var contract = data[0];
       var adminRole = data[1];
       var commerceRole = data[2];
-      console.log("contract: ");
-      console.log(contract);
-      console.log("adminRole");
-      console.log(adminRole);
-      console.log("commerceRole");
-      console.log(commerceRole);
+      console.log("findOrCreateContract | then | contract: ",contract);
+      console.log("findOrCreateContract | then | adminRole",adminRole);
+      console.log("findOrCreateContract | then | commerceRole",commerceRole);
 
       return findOrCreateUser({
         username:  username,
         firstname: monextUser.Users[0].FirstName,
         lastname:  monextUser.Users[0].LastName
       }).then(function (user) {
+        console.log('findOrCreateUser | then',user);
         var monextRole = monextUser.Users[0].AccreditationProfile;
 
         var hasAdminRole = monextRole === "MERCHANT_ADMIN";
@@ -431,14 +434,19 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
           commerceRole.getUsers().add(user);
         }
 
-        return Parse.Object.saveAll([adminRole, commerceRole],{sessionToken:user.getSessionToken()}).then(function (rolesAgain) {
+        return Parse.Object.saveAll([adminRole, commerceRole],{useMasterKey:true}).then(function (rolesAgain) {
 
           var updateRole = function (roleName, roleToAdd) {
-            return new Parse.Query("_Role").equalTo("name", roleName).first({sessionToken:user.getSessionToken()}).then(function (role) {
+            console.log('>updateRole',roleName, roleToAdd);
+            return new Parse.Query("_Role").equalTo("name", roleName).first({useMasterKey:true}).then(function (role) {
+              console.log('updateRole | find ',roleName,role);
               var relation = role.relation("roles");
               relation.add([roleToAdd]);
 
-              return role.save(null);
+              return role.save(role.get('data'),{useMasterKey:true}).then(function(){
+                console.log('updateRole | role.save',role);
+                return role;
+              });
             });
           };
 
@@ -446,9 +454,11 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
             updateRole("admin_generic", rolesAgain[0]),
             updateRole("commerce_generic", rolesAgain[1])
           ]).then(function () {
+            console.log('updateRole | then');
             user.set('contract', contract)
-            return user.save().then(function () {
+            return user.save(user.get('data'),{useMasterKey:true}).then(function () {
               //user.set('nepToken', nepToken)
+              console.log('updateRole | then | user.save',user);
               user._sessionToken = user.getSessionToken()
               return user;
             });
