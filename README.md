@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Thalesserviceaix/parse-server-paystore.svg?branch=master)](https://travis-ci.org/Thalesserviceaix/parse-server-paystore)
 # parse-server-example
 
 Example project using the [parse-server](https://github.com/ParsePlatform/parse-server) module on Express.
