@@ -5,3 +5,4 @@ before_install:
   - npm install -g newman
 before_script:
   - node index.js &
+  - sleep 3 # give parse server some time to start
