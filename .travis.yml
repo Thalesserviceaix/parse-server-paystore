@@ -3,5 +3,4 @@ node_js:
   - "node"
 before_script:
   - npm install -g newman
-  - export DISPLAY=:99.0
-  - sh -e npm start
+  - export DISPLAY=:99.0 && bundle exec npm start
