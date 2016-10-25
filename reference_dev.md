@@ -2,6 +2,21 @@
 * [Docs JS](https://parseplatform.github.io/docs/js/guide/)
 * [Javascript SDK API](https://parseplatform.github.io/Parse-SDK-JS/api/)
 
+##Tester les webservices
+installer [Postman](https://www.getpostman.com/) et importer les collections, environnements et globals depuis tests/api/
+puis newman pour lancer en ligne de commande 
+```
+npm i -g newman
+```
+tester l'api de Monext
+```
+newman run tests/Paystore-Monext-api.postman_collection.json -e tests/Paystore-Monext-api-homo.postman_environment.json -g tests/globals.postman_globals.json
+```
+tester l'api Parse
+```
+newman run tests/Paystore-Parse-Api.postman_collection.json -e tests/Paystore-Parse-api-Heroku.postman_environment.json -g tests/globals.postman_globals.json
+```
+
 ##Migration
 * [Guide migration](https://parse.com/migration)
 * [Parse-Server-Guide](https://github.com/ParsePlatform/parse-server/wiki/Parse-Server-Guide)

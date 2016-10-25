@@ -1,0 +1,114 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Paystore Monext Api",
+		"_postman_id": "e5027a24-82c3-effc-4d43-3733a0b2d93a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "homo.paystore-online.com",
+			"description": "https://homo.paystore-online.com/ws/services/",
+			"item": [
+				{
+					"name": "/ws/services/DoLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"NepToken is Present\"] = !!jsonData.NepToken;\npostman.setGlobalVariable(\"nepToken\", jsonData.NepToken);\n\ntests[\"UserRef is Present\"] = !!jsonData.UserRef;\npostman.setGlobalVariable(\"UserRef\", jsonData.UserRef);\n\ntests[\"SESSIONID is present\"] = !!postman.getResponseHeader(\"SESSIONID\");\npostman.setGlobalVariable(\"SESSIONID\", postman.getResponseHeader(\"SESSIONID\"));"
+							}
+						}
+					],
+					"request": {
+						"url": "{{url}}/ws/services/DoLogin",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"Login\":\"{{username}}\",\n\t\"Password\":\"{{password}}\"\n}"
+						},
+						"description": "UserFind"
+					},
+					"response": []
+				},
+				{
+					"name": "/ws/services/UserFind",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\nvar jsonData = JSON.parse(responseBody);\ntests[\"MerchantRef is present\"] = !!jsonData.Users[0].MerchantRef;\n\n\npostman.setGlobalVariable(\"MerchantRef\", jsonData.Users[0].MerchantRef);"
+							}
+						}
+					],
+					"request": {
+						"url": "{{url}}/ws/services/UserFind",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "SESSIONID",
+								"value": "{{SESSIONID}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"UserRef\":\"{{UserRef}}\"}"
+						},
+						"description": "UserFind"
+					},
+					"response": []
+				},
+				{
+					"name": "/ws/services/GetMerchant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{url}}/ws/services/GetMerchant",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "SESSIONID",
+								"value": "{{SESSIONID}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"MerchantRef\":\"{{MerchantRef}}\"}"
+						},
+						"description": "GetMerchant"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "e50e0f84-1083-791f-2e76-dbcf9978eb2e",
+  "name": "Postman Globals",
+  "values": [
+    {
+      "key": "username",
+      "value": "john_hom@test.fr",
+      "type": "text",
+      "enabled": true
+    },
+    {
+      "key": "password",
+      "value": "john1234",
+      "type": "text",
+      "enabled": true
+    },
+    {
+      "key": "sessionToken",
+      "type": "text",
+      "value": "r:f43c9df2738e7eb9d4e06f7c5618ec2c",
+      "enabled": true
+    },
+    {
+      "key": "nepToken",
+      "type": "text",
+      "value": "TFSb9KJjObDyxuh3CvdIxIIm1YhDwA2ZaRe5QgD3",
+      "enabled": true
+    },
+    {
+      "key": "UserRef",
+      "type": "text",
+      "value": "0IP3UKCQH00008142P4HL4FAJO01",
+      "enabled": true
+    },
+    {
+      "key": "SESSIONID",
+      "type": "text",
+      "value": "J2JFAH3GR8EQ3VKSF9CQ6THXEID5Z1TOLMZ5VDLP",
+      "enabled": true
+    },
+    {
+      "key": "MerchantRef",
+      "type": "text",
+      "value": "0IP3UK89B00005142P4HL4FAJO01",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2016-10-25T09:15:19.925Z",
+  "_postman_exported_using": "Postman/4.8.0"
+}

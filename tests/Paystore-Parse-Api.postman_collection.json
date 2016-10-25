@@ -1,0 +1,177 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Paystore Parse Api",
+		"_postman_id": "3bbbd313-ca14-c710-d24d-9fb3198416d8",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Parse api",
+			"description": "",
+			"item": [
+				{
+					"name": "/functions/proxyauthter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"Username is mine\"] = jsonData.result.username === postman.getGlobalVariable(\"username\");\n\ntests[\"sessionToken is present\"] = !!jsonData.result.sessionToken;\npostman.setGlobalVariable(\"sessionToken\",jsonData.result.sessionToken);\n\ntests[\"nepToken is present\"] = !!jsonData.result.nepToken;\npostman.setGlobalVariable(\"nepToken\",jsonData.result.nepToken);\n"
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{domain}}/{{path}}/functions/proxyauthter",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{username}}\",\n\"password\":\"{{password}}\",\n\"_ApplicationId\":\"{{X-Parse-Application-Id}}\",\n\"_JavaScriptKey\":\"{{X-Parse-Master-Key}}\",\n\"_ClientVersion\":\"js1.9.2\",\n\"_InstallationId\":\"f791614a-3b52-e905-a707-136d4d9c54d1\"}"
+						},
+						"description": "proxyauthter"
+					},
+					"response": []
+				},
+				{
+					"name": "Article",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{domain}}/{{path}}/classes/Article",
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Parse-Application-Id",
+								"value": "{{X-Parse-Application-Id}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "get Article"
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{domain}}/{{path}}/classes/_User",
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Parse-Application-Id",
+								"value": "{{X-Parse-Application-Id}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "get User"
+					},
+					"response": []
+				},
+				{
+					"name": "Contrat",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{domain}}/{{path}}/classes/Contrat",
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Parse-Application-Id",
+								"value": "{{X-Parse-Application-Id}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "[Session] Article ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar jsonData = JSON.parse(responseBody);\ntests[\"results is not empty\"] = !!jsonData.results.length > 0;\n\ntests[\"results.objectId is present\"] = !!jsonData.results[0].objectId;\ntests[\"results.category is present\"] = !!jsonData.results[0].category;\ntests[\"results.label is present\"] = !!jsonData.results[0].label;\ntests[\"results.price is present\"] = !!jsonData.results[0].price;\ntests[\"results.description is present\"] = !!jsonData.results[0].description;\n\ntests[\"results.createdAt is present\"] = !!jsonData.results[0].createdAt;\ntests[\"results.updatedAt is present\"] = !!jsonData.results[0].updatedAt;\ntests[\"results.ACL is present\"] = !!jsonData.results[0].ACL;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{protocol}}://{{domain}}/{{path}}/classes/Article",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"where\":{\"isDeleted\":{\"$ne\":true}},\n\"include\":\"category,unit\",\n\"_method\":\"GET\",\n\"_ApplicationId\":\"{{X-Parse-Application-Id}}\",\n\"_JavaScriptKey\":\"{{X-Parse-Master-Key}}\",\n\"_ClientVersion\":\"js1.9.2\",\n\"_InstallationId\":\"f791614a-3b52-e905-a707-136d4d9c54d1\",\n\"_SessionToken\": \"{{sessionToken}}\" }"
+						},
+						"description": "get Article"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
