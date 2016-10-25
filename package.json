@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test" : "node index.js && newman run tests/Paystore-Parse-Api.postman_collection.json -e tests/Paystore-Parse-api-Local.postman_environment.json -g tests/globals.postman_globals.json"
+    "test" : "newman run tests/Paystore-Parse-Api.postman_collection.json -e tests/Paystore-Parse-api-Local.postman_environment.json -g tests/globals.postman_globals.json"
   },
   "engines": {
     "node": ">=4.3"

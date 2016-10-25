@@ -3,3 +3,5 @@ node_js:
   - "stable"
 before_install:
   - npm install -g newman
+before_scripts:
+  - node index.js &
