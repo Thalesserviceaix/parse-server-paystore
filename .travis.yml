@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "node"
-before_script:
+  - "stable"
+before_install:
   - npm install -g newman
+before_script:
   - export DISPLAY=:99.0 && bundle exec npm start
