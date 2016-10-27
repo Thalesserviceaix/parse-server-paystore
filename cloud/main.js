@@ -99,6 +99,10 @@ Parse.Cloud.define("change_password", function (request, response) {
   }
 
   return MonextAPI.User.login(username, password).then(function (monextResponse) {
+      if (monextResponse.Code !== 0) {
+          console.log("Monext rejected the user");
+          return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.Code});
+      }
     return MonextAPI.User.modifyPassword(username, password, newPassword).then(function (monextResponse) {
       response.success(monextResponse)
     })
@@ -191,21 +195,6 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       return Parse.Promise.error({message: "Monext rejected the user", code: response.Code});
     }
     console.log("Monext accepted the user");
-    console.log("DEBUG JULIEN BEGIN");
-    console.log(response);
-    console.log(response.Code);
-    console.log(response.NepToken);
-    nepToken = response.NepToken
-    console.log(response.NepTokenExpirationTime);
-    console.log("DEBUG JULIEN FIN");
-    /*
-     Response looks like this: {
-     "PasswordExpirationInMinutes": 122239,
-     "UserRef": "0IF5LHFOF0000913HCJJKJEUW401",
-     "Code": 0
-     }
-     */
-
     return response.UserRef;
   }).then(function (userRef) {
     return MonextAPI.User.findByRef(userRef);
@@ -217,34 +206,9 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
   }).then(function (data) {
     var monextUser = data[0];
     var monextMerchant = data[1];
-    console.log("Monext user: ");
-    console.log(monextUser);
-
-    console.log("Monext merchant: ");
-    console.log(monextMerchant);
-
     if (monextUser.Code !== 0) {
       response.error(monextUser.Label);
     }
-
-    /*
-     monextUser looks like this: {
-     "Code": 0,
-     "Users": [   {
-     "UserRef":              "0IF5LHFOF0000913HCJJKJEUW401",
-     "FirstName":            "FstNameUSR1111",
-     "LastName":             "NameUSR1111",
-     "Login":                "USR1111",
-     "Email":                "usr1111@comm111.com",
-     "MobilePhone":          "+33612345678",
-     "MerchantRef":          "0IF5L6HOZ0000313HCJJKJEUW401",
-     "PrimaryUrl":           "svc2-homo.paystore.fr",
-     "SecondaryUrl":         "svc1-homo.paystore.fr",
-     "AccreditationProfile": "MERCHANT_ADMIN"                    OR   "MERCHANT_STAFF"
-     }],
-     "NbUsers": 1
-     }
-     */
 
     var contractId = monextUser.Users[0].MerchantRef;
     console.log("merchantRef:");
