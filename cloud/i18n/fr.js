@@ -262,7 +262,7 @@
     "SDK_GENERIC_ERROR" : "Echec du paiement",
 
     // No category
-    "summary_ticket"                         : "Ticket d'achat",
+    "summary_ticket"                         : "Récapitulatif d’achat",
     "send_ticket"                            : "Envoi du ticket",
     "type_in_your_email"                     : "Veuillez renseigner votre adresse email",
     "type_in_your_coord"                     : "Veuillez renseigner vos coordonnées",
