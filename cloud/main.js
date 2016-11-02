@@ -195,6 +195,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       return Parse.Promise.error({message: "Monext rejected the user", code: response.Code});
     }
     console.log("Monext accepted the user");
+    nepToken = response.NepToken;
     return response.UserRef;
   }).then(function (userRef) {
     return MonextAPI.User.findByRef(userRef);
@@ -319,7 +320,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
 
         console.log("findOrCreateUser | tmp pwd? " + MonextAPI.isTmpPassword());
 
-        var randomPassword = 'youhou';
+        var randomPassword = 'c635e8b836f4eab4a029e2787e59e6fb';
         if (user) {
           console.log("findOrCreateUser | found user:");
           console.log(user);
@@ -342,6 +343,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
           });
         }
 
+        console.log('findOrCreateUser | signUp');
         return Parse.User.signUp(username, randomPassword).then(function (newUser) {
           console.log("findOrCreateUser | created user");
           console.log("findOrCreateUser | created user | newUser",newUser);
@@ -378,6 +380,12 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
       console.log("findOrCreateContract | then | contract: ",contract);
       console.log("findOrCreateContract | then | adminRole",adminRole);
       console.log("findOrCreateContract | then | commerceRole",commerceRole);
+
+      if(typeof adminRole == "undefined" || commerceRole == "undefined"){
+        var msg = 'mauvaise initialisation de la bdd : ajouter les profils admin_generic & commerce_generic !!!';
+        console.error(msg);
+        throw msg;
+      }
 
       return findOrCreateUser({
         username:  username,
