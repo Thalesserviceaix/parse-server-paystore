@@ -19,7 +19,7 @@ Parse.Cloud.define("checkauth", function (request, response) {
         res.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not enought to proceed
     }
 
-    Parse.Cloud.useMasterKey();
+    //Parse.Cloud.useMasterKey();
 
     var username = request.params.username;
     var password = request.params.password;
@@ -33,20 +33,12 @@ Parse.Cloud.define("checkauth", function (request, response) {
             return Parse.Promise.error({message: "Monext rejected the user", code: response.Code});
         }
         console.log("Monext accepted the user");
-        console.log("DEBUG JULIEN BEGIN");
-        console.log(response);
+        console.log("checkauth | login | then",response);
         console.log(response.Code);
         console.log(response.NepToken);
         nepToken = response.NepToken
         console.log(response.NepTokenExpirationTime);
-        console.log("DEBUG JULIEN FIN");
-        /*
-         Response looks like this: {
-         "PasswordExpirationInMinutes": 122239,
-         "UserRef": "0IF5LHFOF0000913HCJJKJEUW401",
-         "Code": 0
-         }
-         */
+        console.log("checkauth | login | then | end");
 
         return response.UserRef;
     }).then(function (userRef) {
@@ -54,7 +46,7 @@ Parse.Cloud.define("checkauth", function (request, response) {
     }).then(function (user) {
         user.set("nepToken", nepToken)
 
-        user.save().then(function () {
+        user.save(user.get('data'), {useMasterKey: true}).then(function () {
             response.success(user)
         })
     }).fail(function (err) {
@@ -138,10 +130,13 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     }
 
     return Parse.Promise.when([
-        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
-        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
-        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find()
-    ]).then(function (transactionRows, transactionCancelRows, transactionCreditRows) {
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true})
+    ]).then(function (data) {
+        var transactionRows = data[0];
+        var transactionCancelRows = data[1];
+        var transactionCreditRows = data[2];
         var allTransactions = transactionRows.concat(transactionCancelRows).concat(transactionCreditRows);
 
         return _.chain(allTransactions).sortBy('createdAt').value().reverse();
@@ -154,14 +149,14 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
 Parse.Cloud.define("add_kiosk_transaction", function (request, response) {
     console.log("BEGIN add_kiosk_transaction")
 
-    var usermane = request.params.username
-    var password = request.params.password
+    var username = request.params.username;
+    var password = request.params.password;
     var kioskTransaction = request.params.kioskTransaction;
     if (!kioskTransaction) {
         response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not enought data to proceed
     }
 
-    return MonextAPI.Transaction.addKioskTransaction(usermane, password, kioskTransaction).then(function (monextResponse) {
+    return MonextAPI.Transaction.addKioskTransaction(username, password, kioskTransaction).then(function (monextResponse) {
         if (monextResponse.data.Code === 0) {
             return response.success();
         }
@@ -275,10 +270,10 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
 
                     return Parse.Promise.when([
                         Parse.Promise.as(newContract),
-                        roles.admin.save().then(function () {
+                        roles.admin.save(roles.admin.get('data'),{useMasterKey:true}).then(function () {
                             return roles.admin
                         }),
-                        roles.commerce.save().then(function () {
+                        roles.commerce.save(roles.commerce.get('data'),{useMasterKey:true}).then(function () {
                             return roles.commerce
                         })
                     ]).then(function (data) {
@@ -302,7 +297,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
                         contract.setACL(contractACL);
 
                         return Parse.Promise.when([
-                            contract.save().then(function () {
+                            contract.save(contract.get('data'),{useMasterKey:true}).then(function () {
                                 return contract;
                             }),
                             Parse.Promise.as(adminRole),
@@ -455,10 +450,10 @@ Parse.Cloud.beforeDelete("Article", function (request, response) {
     var softDeletedError = new Parse.Error(12345, "Article soft deleted");
 
     var article = request.object;
-    return new Parse.Query("TransactionArticle").equalTo("article", article).count().then(function (count) {
+    return new Parse.Query("TransactionArticle").equalTo("article", article).count({useMasterKey: true}).then(function (count) {
         if (count > 0) {
             article.set('isDeleted', true);
-            return article.save().then(function () {
+            return article.save(article.get('data'),{useMasterKey:true}).then(function () {
                 return response.error(softDeletedError.code);
             }).fail(function (error) {
                 return response.error(error);
@@ -473,7 +468,7 @@ Parse.Cloud.beforeDelete("Category", function (request, response) {
     var softDeletedError = new Parse.Error(12345, "Category soft deleted");
 
     var category = request.object;
-    return new Parse.Query("TransactionArticle").equalTo("category", category).count().then(function (count) {
+    return new Parse.Query("TransactionArticle").equalTo("category", category).count({useMasterKey: true}).then(function (count) {
         if (count > 0) {
             category.set('isDeleted', true);
             return category.save().then(function () {
@@ -491,7 +486,7 @@ Parse.Cloud.beforeDelete("Unit", function (request, response) {
     var softDeletedError = new Parse.Error(12345, "Unit soft deleted");
 
     var unit = request.object;
-    return new Parse.Query("TransactionArticle").equalTo("unit", unit).count().then(function (count) {
+    return new Parse.Query("TransactionArticle").equalTo("unit", unit).count({useMasterKey: true}).then(function (count) {
         if (count > 0) {
             unit.set('isDeleted', true);
             return unit.save().then(function () {
@@ -510,7 +505,7 @@ Parse.Cloud.beforeDelete("PaymentMode", function (request, response) {
     var softDeletedError = new Parse.Error(12345, "Unit soft deleted");
 
     var paymentMode = request.object;
-    return new Parse.Query("Transaction").equalTo("paymentMode", paymentMode).count().then(function (count) {
+    return new Parse.Query("Transaction").equalTo("paymentMode", paymentMode).count({useMasterKey: true}).then(function (count) {
         if (count > 0) {
             paymentMode.set('isDeleted', true);
             return paymentMode.save().then(function () {

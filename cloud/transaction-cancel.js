@@ -24,15 +24,17 @@ var TransactionCancel = {
         var commerceRoleName = "commerce_" + params.contractId;
 
         return Parse.Promise.when([
-            new Parse.Query(Parse.Role).equalTo("name", adminRoleName).first(),
-            new Parse.Query(Parse.Role).equalTo("name", commerceRoleName).first(),
-	    ]).then(function (adminRole, commerceRole) {
+            new Parse.Query(Parse.Role).equalTo("name", adminRoleName).first({useMasterKey: true}),
+            new Parse.Query(Parse.Role).equalTo("name", commerceRoleName).first({useMasterKey: true}),
+	    ]).then(function (data) {
+            var adminRole = data[0];
+            var commerceRole = data[1];
 		    return new Parse.Query('TransactionCancelDayView')
                 .equalTo('transactionId', params.tid)
                 .equalTo('yyyy', todayISO.yyyy)
                 .equalTo('mm',   todayISO.mm)
                 .equalTo('dd',   todayISO.dd)
-                .first().then(function (row) {
+                .first({useMasterKey: true}).then(function (row) {
 
                 var row = row || new Parse.Object('TransactionCancelDayView');
 
@@ -51,9 +53,10 @@ var TransactionCancel = {
                 acl.setRoleWriteAccess(adminRole, true);
                 row.set('ACL', acl);
 
+                    console.log('TransactionCancel | updateDayView | then | row',row)
+
                 return row.save().then(function () {
-                    console.log('day row: ');
-                    console.log(row);
+                    console.log('TransactionCancel | updateDayView | then | save | row',row);
 
 				    return row;
 			    });

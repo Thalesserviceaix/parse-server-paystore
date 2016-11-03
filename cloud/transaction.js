@@ -2,8 +2,7 @@
 
 var Transaction = {
     updateDayView: function (params) {
-        console.log('updateDayView(): ', params);
-        console.log(params);
+        console.log('Transaction | updateDayView | then | params', params);
 
         var today = new Date();
         var todaySplit = today.toISOString().split(/[-T]+/);
@@ -17,15 +16,17 @@ var Transaction = {
         var commerceRoleName = "commerce_" + params.contractId;
 
         return Parse.Promise.when([
-            new Parse.Query(Parse.Role).equalTo("name", adminRoleName).first(),
-            new Parse.Query(Parse.Role).equalTo("name", commerceRoleName).first(),
-        ]).then(function (adminRole, commerceRole) {
+            new Parse.Query(Parse.Role).equalTo("name", adminRoleName).first({useMasterKey: true}),
+            new Parse.Query(Parse.Role).equalTo("name", commerceRoleName).first({useMasterKey: true}),
+        ]).then(function (data) {
+            var adminRole = data[0];
+            var commerceRole = data[1];
             return new Parse.Query('TransactionDayView')
                 .equalTo('contractId', params.contractId)
                 .equalTo('yyyy', todayISO.yyyy)
                 .equalTo('mm',   todayISO.mm)
                 .equalTo('dd',   todayISO.dd)
-                .first().then(function (row) {
+                .first({useMasterKey: true}).then(function (row) {
 
                 var row = row || new Parse.Object('TransactionDayView');
 
@@ -37,9 +38,7 @@ var Transaction = {
                 row.set('dd',   todayISO.dd);
                 row.set('ww',   todayISO.ww);
 
-                 console.log('DEBUG JULIEN : params' + params)
-                console.log('DEBUG JULIEN : params.amountWithheld ' + params.amountWithheld) 
-                console.log('DEBUG JULIEN : row.get(amountWithheld)' +row.get('amountWithheld'))
+                    console.log('Transaction | updateDayView | then | row',row)
 
                 // Set ACL
                 var acl = new Parse.ACL();
@@ -50,9 +49,7 @@ var Transaction = {
                 row.set('ACL', acl);
 
                 return row.save().then(function () {
-                    console.log('day row: ');
-                    console.log(row);
-
+                    console.log('Transaction | updateDayView | then | save | row',row);
                     return row;
                 });
             });
