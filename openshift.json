@@ -436,7 +436,7 @@
       "displayName": "Git Repository URL",
       "description": "The URL of the repository with your application source code.",
       "required": true,
-      "value": "https://github.com/ParsePlatform/parse-server-example.git"
+      "value": "https://github.com/Thalesserviceaix/parse-server-paystore.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
