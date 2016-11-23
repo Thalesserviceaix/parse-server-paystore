@@ -17,6 +17,44 @@ tester l'api Parse
 newman run tests/Paystore-Parse-Api.postman_collection.json -e tests/Paystore-Parse-api-Heroku.postman_environment.json -g tests/globals.postman_globals.json
 ```
 
+lancer sur aws 
+(vider le repertoire logs mettre des droits étendus sur ce répertoire et récurssivement)
+```
+sudo PORT=80 MASTER_KEY=FxG90qTkQOjQ5i7idsvaU9yXX72pr3AWhSW6udHs APP_ID=8x8dRvNO3hvJ4eyATtgLwCM9irQhJgE1ShO5VwlK SERVER_URL="http://localhost/parse" PARSE_MOUNT=/parse node index.js
+
+```
+sinon dans /etc/systemd/system/parse-server-paystore.service
+mettre 
+```
+
+[Unit]
+Description=Parse Server Paystore
+
+[Service]
+ExecStart=/home/ubuntu/parse-server-paystore/index.js
+Restart=always
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+Environment=PORT=80
+Environment=MASTER_KEY=FxG90qTkQOjQ5i7idsvaU9yXX72pr3AWhSW6udHs
+Environment=APP_ID=8x8dRvNO3hvJ4eyATtgLwCM9irQhJgE1ShO5VwlK
+Environment=SERVER_URL=http://localhost/parse
+Environment=PARSE_MOUNT=/parse
+WorkingDirectory=/home/ubuntu/parse-server-paystore
+
+[Install]
+WantedBy=multi-user.target
+
+```
+se lance avec
+```
+sudo systemctl daemon-reload
+sudo systemctl start parse-server-paystore
+
+journalctl -f -u parse-server-paystore
+
+```
+
 ##Migration
 * [Guide migration](https://parse.com/migration)
 * [Parse-Server-Guide](https://github.com/ParsePlatform/parse-server/wiki/Parse-Server-Guide)
