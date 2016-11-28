@@ -125,6 +125,8 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     var startDate = request.params.startDate;
     var endDate = request.params.endDate;
 
+
+
     if (!startDate || !endDate) {
         response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not anought data to proceed
     }
@@ -857,7 +859,8 @@ Parse.Cloud.afterSave('Transaction', function (request) {
         var updateParams = {
             tid: request.object.get('objectId'),
             amountWithheld: +request.object.get('amountWithheld'),
-            contractId: contract.get('contractId')
+            contractId: contract.get('contractId'),
+            userId: request.object.get('userId')
         };
 
         return Parse.Promise.when([
@@ -865,6 +868,7 @@ Parse.Cloud.afterSave('Transaction', function (request) {
         ]).then(function (dayRow) {
             console.log('success');
             console.log(dayRow);
+
         }).fail(function (error) {
             console.log('failure');
             console.log(error);

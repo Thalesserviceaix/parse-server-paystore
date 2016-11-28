@@ -37,6 +37,7 @@ var Transaction = {
                 row.set('mm',   todayISO.mm);
                 row.set('dd',   todayISO.dd);
                 row.set('ww',   todayISO.ww);
+                row.set('userId',   params.userId);
 
                     console.log('Transaction | updateDayView | then | row',row)
 
