@@ -863,9 +863,17 @@ Parse.Cloud.afterSave('Transaction', function (request) {
             userId: request.object.get('userId')
         };
 
+        var updateParams2 = {
+            tid: request.object.get('objectId'),
+            amountWithheld: +request.object.get('amountWithheld'),
+            contractId: contract.get('contractId')
+        };
+
         return Parse.Promise.when([
-            Transaction.updateDayView(updateParams)
+            Transaction.updateDayView(updateParams),
+            Transaction.updateDayViewAdmin(updateParams2)
         ]).then(function (dayRow) {
+
             console.log('success');
             console.log(dayRow);
 
