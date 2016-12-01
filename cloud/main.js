@@ -125,6 +125,8 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     var startDate = request.params.startDate;
     var endDate = request.params.endDate;
 
+
+
     if (!startDate || !endDate) {
         response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not anought data to proceed
     }
@@ -133,6 +135,36 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
         new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
         new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
         new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true})
+    ]).then(function (data) {
+        var transactionRows = data[0];
+        var transactionCancelRows = data[1];
+        var transactionCreditRows = data[2];
+        var allTransactions = transactionRows.concat(transactionCancelRows).concat(transactionCreditRows);
+
+        return _.chain(allTransactions).sortBy('createdAt').value().reverse();
+    }).then(function (allTransactions) {
+        response.success(allTransactions);
+    });
+});
+
+Parse.Cloud.define("dashboard_transactions_users", function (request, response) {
+    var startDate = request.params.startDate;
+    var endDate = request.params.endDate;
+    var userId = request.params.userId;
+    console.log(userId);
+    console.log('-----------------------------------------------------------');
+    console.log(request);
+    console.log('-----------------------------------------------------------');
+    console.log(response);
+
+    if (!startDate || !endDate) {
+        response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not anought data to proceed
+    }
+
+    return Parse.Promise.when([
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true})
     ]).then(function (data) {
         var transactionRows = data[0];
         var transactionCancelRows = data[1];
@@ -857,14 +889,24 @@ Parse.Cloud.afterSave('Transaction', function (request) {
         var updateParams = {
             tid: request.object.get('objectId'),
             amountWithheld: +request.object.get('amountWithheld'),
+            contractId: contract.get('contractId'),
+            userId: request.object.get('userId')
+        };
+
+        var updateParams2 = {
+            tid: request.object.get('objectId'),
+            amountWithheld: +request.object.get('amountWithheld'),
             contractId: contract.get('contractId')
         };
 
         return Parse.Promise.when([
-            Transaction.updateDayView(updateParams)
+            Transaction.updateDayView(updateParams),
+            Transaction.updateDayViewAdmin(updateParams2)
         ]).then(function (dayRow) {
+
             console.log('success');
             console.log(dayRow);
+
         }).fail(function (error) {
             console.log('failure');
             console.log(error);
@@ -887,11 +929,18 @@ Parse.Cloud.afterSave('TransactionCancel', function (request) {
         var updateParams = {
             tid: request.object.get('objectId'),
             amountWithheld: +request.object.get('amountWithheld'),
+            contractId: contract.get('contractId'),
+            userId : request.object.get('userId')
+        };
+        var updateParams2 = {
+            tid: request.object.get('objectId'),
+            amountWithheld: +request.object.get('amountWithheld'),
             contractId: contract.get('contractId')
         };
 
         return Parse.Promise.when([
-            TransactionCancel.updateDayView(updateParams)
+            TransactionCancel.updateDayView(updateParams),
+             TransactionCancel.updateDayViewAdmin(updateParams2)
         ]).then(function (dayRow) {
             console.log('success');
             console.log(dayRow);
@@ -917,11 +966,18 @@ Parse.Cloud.afterSave('TransactionCredit', function (request) {
         var updateParams = {
             tid: request.object.get('objectId'),
             amountWithheld: +request.object.get('amountWithheld'),
+            contractId: contract.get('contractId'),
+            userId : request.object.get('userId')
+        };
+        var updateParams2 = {
+            tid: request.object.get('objectId'),
+            amountWithheld: +request.object.get('amountWithheld'),
             contractId: contract.get('contractId')
         };
 
         return Parse.Promise.when([
-            TransactionCredit.updateDayView(updateParams)
+            TransactionCredit.updateDayView(updateParams),
+            TransactionCredit.updateDayViewAdmin(updateParams2)
         ]).then(function (dayRow) {
             console.log('success');
             console.log(dayRow);

@@ -30,11 +30,11 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
-    , "and_or"             : "et/ou"
-    , "send_ticket"        : "Coordonnées pour envoi"
-    , "type_in_your_email" : "Les données renseignées ne sont pas conservées"
-    , "coord_send_ticket"  : "Coordonnées pour envoi"
-    , "type_in_your_coord" : "Les données renseignées ne sont pas conservées"
+    "and_or"             : "et/ou",
+    "send_ticket"        : "Coordonnées pour envoi",
+    "type_in_your_email" : "Les données renseignées ne sont pas conservées",
+    "coord_send_ticket"  : "Coordonnées pour envoi",
+    "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
 
     , "my_dashboard" : "Moi"
     , "my_company_dashboard" : "Mon entreprise"
