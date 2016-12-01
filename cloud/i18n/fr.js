@@ -30,6 +30,12 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    , "and_or"             : "et/ou"
+    , "send_ticket"        : "Coordonnées pour envoi"
+    , "type_in_your_email" : "Les données renseignées ne sont pas conservées"
+    , "coord_send_ticket"  : "Coordonnées pour envoi"
+    , "type_in_your_coord" : "Les données renseignées ne sont pas conservées"
+
     /* Categories */
     "categories" : "Catégories",
     "sort_categories" : "Trier les catégories",
@@ -55,7 +61,7 @@
 
     /* Available languages */
     "fr" : "Français",
-    "en" : "English", 
+    "en" : "English",
 
     /* GAMS */
     "companions" : "Lecteurs",
@@ -94,7 +100,7 @@
     "payment_mode_deletion_question" : 'Êtes-vous sûr de vouloir supprimer définitivement \'<b>{{payment_mode_name}}</b>\' ?',
     "delete_cart" : "Supprimer panier",
     "delete_cart_confirmation" : "Êtes-vous certain de vouloir supprimer tous les articles de votre panier?",
-    "quit_payment_mode_edition" : "Quitter l'édition", 
+    "quit_payment_mode_edition" : "Quitter l'édition",
     "quit_payment_mode_edition_confirmation" : "Voulez vous vraiment quitter l'édition du moyen de paiement",
     "payment_error_no_discount" : "Le champs 'Remise (€)' est requis",
     "payment_error_invalid_discount" : "Le champs 'Remise (%)' est requis et doit être inférieur ou égal à 100 %",
@@ -119,7 +125,7 @@
     "unit_deletion_move" : 'Êtes vous sûr de vouloir supprimer définitivement l\'unité <b>\"{{unit_name}}\"</b> et assigner \"unité\" aux articles associés',
     "unit_deletion_empty" : 'Êtes vous sûr de vouloir supprimer définitivement l\'unité <b>\"{{unit_name}}\"</b>',
     "associate_unit" : 'Assigner \"unité\" aux articles associés',
-    "quit_unit_edition" : "Quitter l'édition", 
+    "quit_unit_edition" : "Quitter l'édition",
     "quit_unit_edition_confirmation" : "Voulez vous vraiment quitter l'édition de l'unité",
 
     /* Cart */
@@ -186,7 +192,7 @@
     "cashing" : "Encaissement",
     "amount" : "Montant",
     "refund_mean" : "Moyen de remboursement",
-    
+
     /* Transactions */
     "bank_card_transaction" : "Transaction par carte bancaire...",
     "my_transaction" : "Ma transaction",
@@ -229,7 +235,7 @@
 
     /* Connection */
     "connection_lost" : 'Connexion perdue',
-    "connection_back_up" : 'Connexion rétablie', 
+    "connection_back_up" : 'Connexion rétablie',
 
     /* Actions */
     "accept" : "Accepter",
@@ -282,7 +288,7 @@
     "field_required_REFUND_PAYMENTMETHOD"    : "Champ 'méthode de paiement' requis",
     "field_required_REFUND_PAYMENTMODE_NAME" : "Champ 'nom' requis",
     "no_transaction_found"                   : "Aucune transaction trouvée",
-	
+
 	//Error Manager
         //login
     "errorManager_login_0"                  : "Connexion réussie",
@@ -299,7 +305,7 @@
     "errorManager_login_104"                    : "Une erreur inconnue est survenue (code 104)",
     "errorManager_login_105"                    : "Une erreur inconnue est survenue (code 105)",
     "errorManager_login_200"                    : "Une erreur inconnue est survenue (code 200)",
-     
+
         //login
     "errorManager_change_password_0"                    : "Mot de passe changé",
     "errorManager_change_password_1"                    : "Une erreur inconnue est survenue (code 1)",
@@ -315,7 +321,7 @@
     "errorManager_change_password_104"                  : "Votre mot de passe doit contenir au moins une lettre et au moins un chiffre (code 104)",
     "errorManager_change_password_105"                  : "Mot de passe déjà utilisé précédemment (code 105)",
     "errorManager_change_password_200"                  : "Une erreur inconnue est survenue (code 200)",
-	
+
 	"end": "merci"
 };
 
