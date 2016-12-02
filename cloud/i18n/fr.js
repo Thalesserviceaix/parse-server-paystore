@@ -36,6 +36,9 @@
     "coord_send_ticket"  : "Coordonnées pour envoi",
     "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
 
+    "my_dashboard" : "Moi",
+    "my_company_dashboard" : "Mon entreprise",
+
     /* Categories */
     "categories" : "Catégories",
     "sort_categories" : "Trier les catégories",

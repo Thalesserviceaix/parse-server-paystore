@@ -36,6 +36,9 @@
     , "coord_send_ticket"  : "Billing information"
     , "type_in_your_coord" : "Information will not be stored"
 
+    , "my_dashboard" : "Me"
+    , "my_company_dashboard" : "My company"
+
     /* Categories */
     , "categories" : "Categories"
     , "sort_categories" : "Sort the categories"
