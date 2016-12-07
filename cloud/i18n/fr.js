@@ -271,8 +271,6 @@
 
     // No category
     "summary_ticket"                         : "Récapitulatif d’achat",
-    "type_in_your_email"                     : "Veuillez renseigner votre adresse email",
-    "type_in_your_coord"                     : "Veuillez renseigner vos coordonnées",
     "handwritten_ticket"                     : "Ticket manuscrit",
     "authentication_required"                : "Veuillez vous authentifier",
     "type_in_your_password"                  : "Veuillez renseigner votre mot de passe",

@@ -267,8 +267,6 @@
 
     // No category
     "summary_ticket"                         : "Purchase summary",
-    "type_in_your_email"                     : "Please fill in your email",
-    "type_in_your_coord"                     : "Please fill in your coordinates",
     "handwritten_ticket"                     : "Handwritten ticket",
     "authentication_required"                : "Authentication required",
     "type_in_your_password"                  : "Please fill in your password",
