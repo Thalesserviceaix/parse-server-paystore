@@ -31,7 +31,6 @@
     , "take_picture" : "Take a picture"
 
     , "and_or"             : "and/or"
-    , "send_ticket"        : "Billing information"
     , "type_in_your_email" : "Information will not be stored"
     , "coord_send_ticket"  : "Billing information"
     , "type_in_your_coord" : "Information will not be stored"
@@ -268,7 +267,6 @@
 
     // No category
     "summary_ticket"                         : "Purchase summary",
-    "send_ticket"                            : "Send ticket",
     "type_in_your_email"                     : "Please fill in your email",
     "type_in_your_coord"                     : "Please fill in your coordinates",
     "handwritten_ticket"                     : "Handwritten ticket",

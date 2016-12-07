@@ -31,7 +31,6 @@
     "take_picture" : "Prendre une photo",
 
     "and_or"             : "et/ou",
-    "send_ticket"        : "Coordonnées pour envoi",
     "type_in_your_email" : "Les données renseignées ne sont pas conservées",
     "coord_send_ticket"  : "Coordonnées pour envoi",
     "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
@@ -272,7 +271,6 @@
 
     // No category
     "summary_ticket"                         : "Récapitulatif d’achat",
-    "send_ticket"                            : "Envoi du ticket",
     "type_in_your_email"                     : "Veuillez renseigner votre adresse email",
     "type_in_your_coord"                     : "Veuillez renseigner vos coordonnées",
     "handwritten_ticket"                     : "Ticket manuscrit",
