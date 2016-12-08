@@ -30,6 +30,8 @@
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
 
+    , "mail"               : "mail"
+    , "tel"                : "sms"
     , "and_or"             : "and/or"
     , "type_in_your_email" : "Information will not be stored"
     , "coord_send_ticket"  : "Billing information"
