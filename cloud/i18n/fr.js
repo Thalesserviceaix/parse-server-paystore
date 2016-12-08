@@ -30,6 +30,8 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    "cardreader_init_title": "Initialisation du lecteur",
+
     "mail"               : "mail",
     "tel"                : "tel",
     "and_or"             : "et/ou",

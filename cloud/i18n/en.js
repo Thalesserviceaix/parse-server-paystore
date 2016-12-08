@@ -30,6 +30,8 @@
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
 
+    , "cardreader_init_title": "Card reader initializing"
+
     , "mail"               : "mail"
     , "tel"                : "sms"
     , "and_or"             : "and/or"
