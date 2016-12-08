@@ -88,7 +88,7 @@
     "to_pay" : "A payer",
     "to_checkout" : "A encaisser",
     "not_available_offline" : "(non disponible hors ligne)",
-    "payment_device_init" : "Init lecteur...",
+    "payment_device_init" : "Mise à jour de mon lecteur",
     "cash" : "Espèces",
     "bank_card" : "CB",
     "remainder" : "Restant dû",

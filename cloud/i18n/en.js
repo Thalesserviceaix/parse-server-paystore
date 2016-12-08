@@ -88,7 +88,7 @@
     , "to_pay" : "To pay"
     , "to_checkout" : "To checkout"
     , "not_available_offline" : "Not available in offline mode"
-    , "payment_device_init" : "Init terminal..."
+    , "payment_device_init" : "Update my card reader"
     , "cash" : "Cash"
     , "bank_card" : "Cartes bancaires"
     , "remainder" : "Remaining of the umount"
