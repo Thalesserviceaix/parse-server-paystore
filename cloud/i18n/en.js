@@ -31,6 +31,7 @@
     , "take_picture" : "Take a picture"
 
     , "cardreader_init_title": "Card reader initializing"
+    , "cardreader_verify_title": "Checking card reader"
 
     , "mail"               : "mail"
     , "tel"                : "sms"

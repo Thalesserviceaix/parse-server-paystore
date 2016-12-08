@@ -31,6 +31,7 @@
     "take_picture" : "Prendre une photo",
 
     "cardreader_init_title": "Initialisation du lecteur",
+    "cardreader_verify_title": "Vérification du lecteur",
 
     "mail"               : "mail",
     "tel"                : "tel",
