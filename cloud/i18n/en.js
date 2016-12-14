@@ -30,8 +30,12 @@
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
 
+    , "cardreader_init_title": "Checking card reader"
+    , "cardreader_verify_title": "Checking card reader"
+
+    , "mail"               : "mail"
+    , "tel"                : "sms"
     , "and_or"             : "and/or"
-    , "send_ticket"        : "Billing information"
     , "type_in_your_email" : "Information will not be stored"
     , "coord_send_ticket"  : "Billing information"
     , "type_in_your_coord" : "Information will not be stored"
@@ -87,7 +91,7 @@
     , "to_pay" : "To pay"
     , "to_checkout" : "To checkout"
     , "not_available_offline" : "Not available in offline mode"
-    , "payment_device_init" : "Init terminal..."
+    , "payment_device_init" : "Update my card reader"
     , "cash" : "Cash"
     , "bank_card" : "Cartes bancaires"
     , "remainder" : "Remaining of the umount"
@@ -105,11 +109,15 @@
     , "delete_cart_confirmation" : "Confirm removal the contents of the cart"
     , "quit_payment_mode_edition" : "Exit the edit mode"
     , "quit_payment_mode_edition_confirmation" : "Confirm the exit of the edit mode"
+
     , "payment_error_no_discount" : "Le champs 'Remise (€)' est requis"
     , "payment_error_invalid_discount" : "A discount inferior or equal at 100 % is mandatory"
     , "payment_error_discount_too_great" : "The discount must be lower than the amount"
     , "payment_error_no_cash" : "Enter the received amount"
     , "payment_error_not_enough_cash": "The received amount must be lower than the umount to collect"
+    , "payment_title_ticket_cb" : "Card payment result"
+    , "payment_popup_coord_title_email" : "Card ticket by email"
+    , "payment_popup_coord_title_tel" : "Card ticket by text :"
 
     /* Units */
     , "units" : "units"
@@ -268,9 +276,6 @@
 
     // No category
     "summary_ticket"                         : "Purchase summary",
-    "send_ticket"                            : "Send ticket",
-    "type_in_your_email"                     : "Please fill in your email",
-    "type_in_your_coord"                     : "Please fill in your coordinates",
     "handwritten_ticket"                     : "Handwritten ticket",
     "authentication_required"                : "Authentication required",
     "type_in_your_password"                  : "Please fill in your password",

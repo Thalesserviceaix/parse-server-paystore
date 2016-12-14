@@ -30,8 +30,12 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    "cardreader_init_title": "Vérification du lecteur",
+    "cardreader_verify_title": "Vérification du lecteur",
+
+    "mail"               : "mail",
+    "tel"                : "tel",
     "and_or"             : "et/ou",
-    "send_ticket"        : "Coordonnées pour envoi",
     "type_in_your_email" : "Les données renseignées ne sont pas conservées",
     "coord_send_ticket"  : "Coordonnées pour envoi",
     "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
@@ -87,7 +91,7 @@
     "to_pay" : "A payer",
     "to_checkout" : "A encaisser",
     "not_available_offline" : "(non disponible hors ligne)",
-    "payment_device_init" : "Init lecteur...",
+    "payment_device_init" : "Mise à jour de mon lecteur",
     "cash" : "Espèces",
     "bank_card" : "CB",
     "remainder" : "Restant dû",
@@ -110,9 +114,9 @@
     "payment_error_discount_too_great" : "Vous ne pouvez pas remiser plus que le total à payer",
     "payment_error_no_cash" : "Veuillez saisir le montant reçu",
     "payment_error_not_enough_cash": "Le montant reçu doit être égal ou supérieur au montant à encaisser",
-    "payment_title_ticket_cb" : "Ticket CB",
-    "payment_popup_coord_title_email" : "Ticket d’achat par mail",
-    "payment_popup_coord_title_tel" : "Ticket CB par SMS :",
+    "payment_title_ticket_cb" : "Résultat du paiement carte",
+    "payment_popup_coord_title_email" : "Ticket client par mail",
+    "payment_popup_coord_title_tel" : "Ticket CB par SMS",
 
     /* Units */
     "units" : "Unités",
@@ -198,7 +202,7 @@
 
     /* Transactions */
     "bank_card_transaction" : "Transaction par carte bancaire...",
-    "my_transaction" : "Ma transaction",
+    "my_transaction" : "Mon opération",
     "cancel_transaction_confirmation" : "Voulez-vous vraiment quitter ?",
     "cancel_transaction_warning" : 'Annuler une transaction n\'annule pas les paiements qui ont déjà été effectués',
     "transaction_validated" : "Transaction validée",
@@ -272,9 +276,6 @@
 
     // No category
     "summary_ticket"                         : "Récapitulatif d’achat",
-    "send_ticket"                            : "Envoi du ticket",
-    "type_in_your_email"                     : "Veuillez renseigner votre adresse email",
-    "type_in_your_coord"                     : "Veuillez renseigner vos coordonnées",
     "handwritten_ticket"                     : "Ticket manuscrit",
     "authentication_required"                : "Veuillez vous authentifier",
     "type_in_your_password"                  : "Veuillez renseigner votre mot de passe",
