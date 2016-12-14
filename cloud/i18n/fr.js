@@ -30,7 +30,7 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
-    "cardreader_init_title": "Initialisation du lecteur",
+    "cardreader_init_title": "Vérification du lecteur",
     "cardreader_verify_title": "Vérification du lecteur",
 
     "mail"               : "mail",
@@ -114,7 +114,7 @@
     "payment_error_discount_too_great" : "Vous ne pouvez pas remiser plus que le total à payer",
     "payment_error_no_cash" : "Veuillez saisir le montant reçu",
     "payment_error_not_enough_cash": "Le montant reçu doit être égal ou supérieur au montant à encaisser",
-    "payment_title_ticket_cb" : "Résultat du paiement par carte",
+    "payment_title_ticket_cb" : "Résultat du paiement carte",
     "payment_popup_coord_title_email" : "Ticket client par mail",
     "payment_popup_coord_title_tel" : "Ticket CB par SMS",
 
@@ -202,7 +202,7 @@
 
     /* Transactions */
     "bank_card_transaction" : "Transaction par carte bancaire...",
-    "my_transaction" : "Ma transaction",
+    "my_transaction" : "Mon opération",
     "cancel_transaction_confirmation" : "Voulez-vous vraiment quitter ?",
     "cancel_transaction_warning" : 'Annuler une transaction n\'annule pas les paiements qui ont déjà été effectués',
     "transaction_validated" : "Transaction validée",
