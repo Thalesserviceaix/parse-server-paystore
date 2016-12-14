@@ -33,6 +33,9 @@
     , "cardreader_init_title": "Checking card reader"
     , "cardreader_verify_title": "Checking card reader"
 
+    , "card_reader_init_on_login_fail_title": "Error"
+    , "card_reader_init_on_login_fail_message": "Couldn't initialize the cardreader"
+
     , "mail"               : "mail"
     , "tel"                : "sms"
     , "and_or"             : "and/or"
