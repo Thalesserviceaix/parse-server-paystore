@@ -132,9 +132,9 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     }
 
     return Parse.Promise.when([
-        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
-        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
-        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true})
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find()
     ]).then(function (data) {
         var transactionRows = data[0];
         var transactionCancelRows = data[1];
@@ -162,9 +162,9 @@ Parse.Cloud.define("dashboard_transactions_users", function (request, response) 
     }
 
     return Parse.Promise.when([
-        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
-        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
-        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true})
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find(),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find(),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find()
     ]).then(function (data) {
         var transactionRows = data[0];
         var transactionCancelRows = data[1];
