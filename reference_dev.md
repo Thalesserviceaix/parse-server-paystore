@@ -56,7 +56,10 @@ se lance avec
 sudo systemctl daemon-reload
 sudo systemctl start parse-server-paystore
 
+sudo systemctl status parse-server-paystore.service
+
 journalctl -f -u parse-server-paystore
+
 
 ```
 

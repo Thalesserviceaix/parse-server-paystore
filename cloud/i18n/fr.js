@@ -44,7 +44,7 @@
     "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
 
     "my_dashboard" : "Moi",
-    "my_company_dashboard" : "Mon entreprise",
+    "my_company_dashboard" : "Ma boutique",
 
     /* Categories */
     "categories" : "Catégories",
