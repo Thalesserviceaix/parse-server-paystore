@@ -30,6 +30,8 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    "card_reader_question_modal_title": "Attention requise",
+
     "cardreader_init_title": "Vérification du lecteur",
     "cardreader_verify_title": "Vérification du lecteur",
 

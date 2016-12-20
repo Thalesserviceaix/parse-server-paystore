@@ -30,6 +30,8 @@
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
 
+    , "card_reader_question_modal_title": "Attention required"
+
     , "cardreader_init_title": "Checking card reader"
     , "cardreader_verify_title": "Checking card reader"
 
