@@ -35,8 +35,8 @@
     , "cardreader_init_title": "Checking card reader"
     , "cardreader_verify_title": "Checking card reader"
 
-    , "card_reader_init_on_login_fail_title": "Error"
-    , "card_reader_init_on_login_fail_message": "Couldn't initialize the cardreader"
+    , "card_reader_init_on_login_fail_title": "Checking cardreader"
+    , "card_reader_init_on_login_fail_message": "Reader not connected"
 
     , "mail"               : "mail"
     , "tel"                : "sms"

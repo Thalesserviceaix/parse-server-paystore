@@ -35,8 +35,8 @@
     "cardreader_init_title": "Vérification du lecteur",
     "cardreader_verify_title": "Vérification du lecteur",
 
-    "card_reader_init_on_login_fail_title": "Erreur",
-    "card_reader_init_on_login_fail_message": "Impossible d'initialiser le lecteur",
+    "card_reader_init_on_login_fail_title": "Vérification du lecteur",
+    "card_reader_init_on_login_fail_message": "Lecteur non détecté",
 
     "mail"               : "mail",
     "tel"                : "tel",
