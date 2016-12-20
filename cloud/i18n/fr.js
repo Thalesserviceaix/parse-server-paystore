@@ -161,7 +161,7 @@
     "new_password_sent" : "Un SMS avec votre nouveau mot de passe va vous être envoyé",
     "password_changed" : "Votre mot de passe a bien été changé",
     "incorrect_credentials" : "Votre identifiant ou votre mot de passe est erroné",
-    "unknown_error" : 'Une erreur inconnu est survenue: ',
+    "unknown_error" : 'Une erreur inconnue est survenue: ',
     "cannot_reinit_password" : "Votre mot de passe ne peut être réinitialisé",
     "connection_error" : "Verifier l'etat de votre réseau et connectez-vous à nouveau",
 
