@@ -125,7 +125,10 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     var startDate = request.params.startDate;
     var endDate = request.params.endDate;
 
+    console.log(startDate)
+    console.log(endDate)
 
+    console.log(request)
 
     if (!startDate || !endDate) {
         response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not anought data to proceed

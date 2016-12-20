@@ -215,7 +215,7 @@
     "crop_image" : "Redimensionnement de l'image",
 
     /* Locking */
-    "locking" : "Verrouillage",
+    "locking" : "Verrouiller",
     "locking_delay" : "Verrouillage au bout de",
     "minute" : "min",
 
