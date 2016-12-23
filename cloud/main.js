@@ -862,18 +862,17 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         message: message
     });
 
-    return Mailgun.sendEmail({
-        to: to,
-        from: "postmaster@joeyrogues.com",
-        subject: subject,
-        html: html
-    }, {
-        success: function (httpResponse) {
-            response.success('OK');
-        },
-        error: function (httpResponse) {
-            response.error(error);
+    return Mailgun.messages().send({
+        to      : to,
+        from    : "postmaster@joeyrogues.com",
+        subject : subject,
+        html    : html
+    }, function (error, body) {
+        if (!!error) {
+            return response.error(error);
         }
+
+        return response.success(body);
     });
 });
 
