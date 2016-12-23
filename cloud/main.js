@@ -869,9 +869,11 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         html    : html
     }, function (error, body) {
         if (!!error) {
+            console.error(JSON.stringify(error))
             return response.error(error);
         }
 
+        console.error(JSON.stringify(body))
         return response.success(body);
     });
 });
