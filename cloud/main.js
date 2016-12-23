@@ -855,7 +855,7 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         return;
     }
 
-    var template = fs.readFileSync('./templates/contact.js', 'utf8');
+    var template = fs.readFileSync('cloud/templates/contact.js', 'utf8');
     var template_to_compile = _.template(template);
     var html = template_to_compile({
         username: username,
