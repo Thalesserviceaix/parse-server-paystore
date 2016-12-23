@@ -851,7 +851,7 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
 
     if (!to || !username || !message || !subject) {
         console.error('SendMail: Missing parameters');
-        response.error("Uh oh, something went wrong");
+        response.error("Missing parameters {to, username, message, subject}");
         return;
     }
 
@@ -869,11 +869,18 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         html    : html
     }, function (error, body) {
         if (!!error) {
+            console.log('error')
             console.error(JSON.stringify(error))
+
+            console.log('body')
+            console.error(JSON.stringify(body))
+
             return response.error(error);
         }
 
+        console.log('body')
         console.error(JSON.stringify(body))
+        
         return response.success(body);
     });
 });

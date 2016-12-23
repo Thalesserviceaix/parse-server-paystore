@@ -176,8 +176,13 @@
     , "message" : "Message"
     , "contact" : "Contact"
     , "email_no_message" : "Complete your message before sending"
-    , "message_sent" : "Message sent"
-    , "message_sent_success" : "Your message has been sent with success"
+
+    , "message_sent_title_success" : "Message sent"
+    , "message_sent_text_success" : "Your message has been sent with success"
+
+    , "message_sent_title_error" : "Message not sent"
+    , "message_sent_text_error" : "Your message couldn't be sent"
+
     , "contact_email" : "support.letspay@sfr.fr"
     , "contact_phone" : "0805777575"
 
