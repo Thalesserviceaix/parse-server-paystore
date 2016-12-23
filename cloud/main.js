@@ -649,19 +649,19 @@ Parse.Cloud.define('SendEmail', function (request, response) {
                 city: contract.get('city')
             });
 
-            return Mailgun.sendEmail({
-                to: to, // TODO insert real email
-                from: "postmaster@joeyrogues.com",
-                subject: "Ticket de caisse",
-                html: html
-            }, {
-                success: function (httpResponse) {
-                    console.log(httpResponse)
-                    console.log('email sent');
-                },
-                error: function (httpResponse) {
+            return Mailgun.messages().send({
+                to      : to, // TODO insert real email
+                from    : "support.letspay@sfr.fr",
+                subject : "Ticket de caisse",
+                html    : html
+            }, function (error, body) {
+                if (!!error) {
                     console.error(httpResponse);
+                    return;
                 }
+
+                console.log(httpResponse)
+                console.log('email sent');
             });
         })
     }).fail(function (error) {
