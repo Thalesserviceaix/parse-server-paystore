@@ -91,7 +91,10 @@
     "payment" : "Paiement",
     "payments" : "Paiements",
     "total_amount_cart" : "Total du panier",
-    "discount" : "Remise",
+    
+    "validate_discount": "Valider la remise",
+    "configure_discount": "Appliquer une remise",
+
     "discount_of" : "Remise de",
     "to_pay" : "A payer",
     "to_checkout" : "A encaisser",

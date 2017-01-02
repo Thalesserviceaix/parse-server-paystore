@@ -1,7 +1,7 @@
 ﻿﻿var i18n = {
 
     /* Articles */
-    "my_articles" : "My articles"
+      "my_articles" : "My articles"
     , "sort_articles" : "Sort the articles"
     , "filter_articles" : "Filter the articles"
     , "articles" : "Articles"
@@ -91,7 +91,10 @@
     , "payment" : "Payment"
     , "payments" : "Payments"
     , "total_amount_cart" : "Total amount of the cart"
-    , "discount" : "Discount"
+
+    , "validate_discount": "Accept discount"
+    , "configure_discount": "Apply discount"
+
     , "discount_of" : "Discount of"
     , "to_pay" : "To pay"
     , "to_checkout" : "To checkout"
