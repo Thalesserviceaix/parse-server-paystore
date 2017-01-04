@@ -193,12 +193,13 @@ Parse.Cloud.define("add_kiosk_transaction", function (request, response) {
 
     return MonextAPI.Transaction.addKioskTransaction(username, password, kioskTransaction).then(function (monextResponse) {
         if (monextResponse.data.Code === 0) {
-            return response.success();
+            return response.success(monextResponse);
         }
         console.log("ERROR-add_kiosk_transaction")
         console.log(monextResponse)
         console.log("'----'")
-        return response.error();
+
+        return response.error(monextResponse);
     }).fail(function (error) {
         return response.error(error);
     });
