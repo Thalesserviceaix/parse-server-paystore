@@ -93,7 +93,7 @@
     "total_amount_cart" : "Total du panier",
     
     "validate_discount": "Appliquer",
-    "configure_discount": "Appliquer une remise",
+    "configure_discount": "Remise",
 
     "discount_of" : "Remise de",
     "to_pay" : "A payer",

@@ -93,7 +93,7 @@
     , "total_amount_cart" : "Total amount of the cart"
 
     , "validate_discount": "Apply"
-    , "configure_discount": "Apply discount"
+    , "configure_discount": "Discount"
 
     , "discount_of" : "Discount of"
     , "to_pay" : "To pay"
