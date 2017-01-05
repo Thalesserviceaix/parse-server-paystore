@@ -260,6 +260,7 @@
     /* Actions */
     "accept" : "Accepter",
     "cancel" : "Annuler",
+    "abandon" : "Abandon",
     "close" : "Fermer",
     "filter" : "Filtrer",
     "search" : "Recherche",

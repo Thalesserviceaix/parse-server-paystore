@@ -114,10 +114,10 @@ Parse.Cloud.define("resetpassword", function (request, response) {
 
     return MonextAPI.User.resetPassword(username).then(function (monextResponse) {
         if (monextResponse.Code === 0) {
-            return response.success();
+            return response.success(monextResponse);
         }
 
-        return response.error();
+        return response.error(monextResponse);
     });
 });
 

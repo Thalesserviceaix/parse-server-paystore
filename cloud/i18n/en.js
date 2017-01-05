@@ -260,6 +260,7 @@
     /* Actions */
     , "accept" : "Accept"
     , "cancel" : "Cancel"
+    , "abandon" : "Abandon"
     , "close" : "Clode"
     , "filter" : "Filter"
     , "search" : "Search"
