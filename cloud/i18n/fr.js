@@ -163,7 +163,7 @@
     "forgotten_password_question" : "Mot de passe oublié ?",
     "email" : "Email",
     "request_new_password" : "Demander un nouveau mot de passe",
-    "new_password_sent" : "Un SMS avec votre nouveau mot de passe va vous être envoyé",
+    "new_password_sent" : "Un mot de passe provisoire vient de vous être envoyé par SMS",
     "password_changed" : "Mot de passe changé",
     "incorrect_credentials" : "Votre identifiant ou votre mot de passe est erroné",
     "unknown_error" : 'Une erreur inconnue est survenue: ',
