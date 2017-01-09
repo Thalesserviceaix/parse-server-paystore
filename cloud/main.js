@@ -4,8 +4,12 @@ var md5 = require("./md5.js");
 var _ = require('underscore');
 var fs = require('fs');
 var Mailgun = require('mailgun-js')({
-    apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
-    domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+    // apiKey: 'key-ffff71fcee9784638da21c7f37207ab5', // Joey
+    // domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org', // Joey
+    apiKey: 'key-c7e35a4463a8358ced4659702b81ec94',
+    domain: 'sandbox8c522fdd4e764c9db4d59a03d9358ec4.mailgun.org',
+
+    nothing: 'nothing'
 });
 var moment = require('moment');
 
@@ -859,18 +863,18 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         message: message
     });
 
-    return Mailgun.sendEmail({
-        to: to,
-        from: "postmaster@joeyrogues.com",
-        subject: subject,
-        html: html
-    }, {
-        success: function (httpResponse) {
-            response.success('OK');
-        },
-        error: function (httpResponse) {
+    return Mailgun.messages().send({
+        to      : to,
+        from    : "support.letspay@sfr.fr",
+        subject : subject,
+        html    : html
+    }, function (error, body) {
+        if (error) {
             response.error(error);
+            return
         }
+
+        response.success(body);
     });
 });
 
