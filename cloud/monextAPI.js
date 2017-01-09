@@ -1,8 +1,9 @@
 ﻿var MonextAPI = (function () {
     var self;
     return self = {
-        _serviceURL: "https://homo.paystore-online.com/ws/services/",
+        //_serviceURL: "https://homo.paystore-online.com/ws/services/",
         //_serviceURL: "https://recette.paystore-online.com/ws/services/",
+        _serviceURL: "https://paystore-online.com/ws/services/",
         _getLongUrl: function (resourceName) {
             return self._serviceURL + resourceName;
         },
