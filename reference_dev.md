@@ -46,12 +46,20 @@ WorkingDirectory=/home/ubuntu/parse-server-paystore
 WantedBy=multi-user.target
 
 ```
+changer la permission de l'index.js : 
+```
+chmod +x index.js
+```
+
 se lance avec
 ```
 sudo systemctl daemon-reload
 sudo systemctl start parse-server-paystore
 
+sudo systemctl status parse-server-paystore.service
+
 journalctl -f -u parse-server-paystore
+
 
 ```
 

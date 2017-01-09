@@ -4,8 +4,10 @@ var md5 = require("./md5.js");
 var _ = require('underscore');
 var fs = require('fs');
 var Mailgun = require('mailgun-js')({
-    apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
-    domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+    // apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
+    // domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+    apiKey: 'key-c7e35a4463a8358ced4659702b81ec94',
+    domain: 'sandbox8c522fdd4e764c9db4d59a03d9358ec4.mailgun.org'
 });
 var moment = require('moment');
 
@@ -114,10 +116,10 @@ Parse.Cloud.define("resetpassword", function (request, response) {
 
     return MonextAPI.User.resetPassword(username).then(function (monextResponse) {
         if (monextResponse.Code === 0) {
-            return response.success();
+            return response.success(monextResponse);
         }
 
-        return response.error();
+        return response.error(monextResponse);
     });
 });
 
@@ -125,16 +127,19 @@ Parse.Cloud.define("dashboard_transactions", function (request, response) {
     var startDate = request.params.startDate;
     var endDate = request.params.endDate;
 
+    console.log(startDate)
+    console.log(endDate)
 
+    console.log(request)
 
     if (!startDate || !endDate) {
         response.error(422, "Missing parameters"); // HTTP code 422: we received correctly formated data but not anought data to proceed
     }
 
     return Parse.Promise.when([
-        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
-        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true}),
-        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find({useMasterKey: true})
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find(),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).find()
     ]).then(function (data) {
         var transactionRows = data[0];
         var transactionCancelRows = data[1];
@@ -162,9 +167,9 @@ Parse.Cloud.define("dashboard_transactions_users", function (request, response) 
     }
 
     return Parse.Promise.when([
-        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
-        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true}),
-        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find({useMasterKey: true})
+        new Parse.Query('Transaction').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find(),
+        new Parse.Query('TransactionCancel').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find(),
+        new Parse.Query('TransactionCredit').greaterThanOrEqualTo('createdAt', startDate).lessThan('createdAt', endDate).equalTo('userId',userId).find()
     ]).then(function (data) {
         var transactionRows = data[0];
         var transactionCancelRows = data[1];
@@ -190,12 +195,13 @@ Parse.Cloud.define("add_kiosk_transaction", function (request, response) {
 
     return MonextAPI.Transaction.addKioskTransaction(username, password, kioskTransaction).then(function (monextResponse) {
         if (monextResponse.data.Code === 0) {
-            return response.success();
+            return response.success(monextResponse);
         }
         console.log("ERROR-add_kiosk_transaction")
         console.log(monextResponse)
         console.log("'----'")
-        return response.error();
+
+        return response.error(monextResponse);
     }).fail(function (error) {
         return response.error(error);
     });
@@ -848,29 +854,37 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
 
     if (!to || !username || !message || !subject) {
         console.error('SendMail: Missing parameters');
-        response.error("Uh oh, something went wrong");
+        response.error("Missing parameters {to, username, message, subject}");
         return;
     }
 
-    var template = fs.readFileSync('./templates/contact.js', 'utf8');
+    var template = fs.readFileSync('cloud/templates/contact.js', 'utf8');
     var template_to_compile = _.template(template);
     var html = template_to_compile({
         username: username,
         message: message
     });
 
-    return Mailgun.sendEmail({
-        to: to,
-        from: "postmaster@joeyrogues.com",
-        subject: subject,
-        html: html
-    }, {
-        success: function (httpResponse) {
-            response.success('OK');
-        },
-        error: function (httpResponse) {
-            response.error(error);
+    return Mailgun.messages().send({
+        to      : to,
+        from    : "postmaster@joeyrogues.com",
+        subject : subject,
+        html    : html
+    }, function (error, body) {
+        if (!!error) {
+            console.log('error')
+            console.error(JSON.stringify(error))
+
+            console.log('body')
+            console.error(JSON.stringify(body))
+
+            return response.error(error);
         }
+
+        console.log('body')
+        console.error(JSON.stringify(body))
+        
+        return response.success(body);
     });
 });
 

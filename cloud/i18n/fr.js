@@ -30,6 +30,24 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    "card_reader_question_modal_title": "Attention requise",
+
+    "cardreader_init_title": "Vérification du lecteur",
+    "cardreader_verify_title": "Vérification du lecteur",
+
+    "card_reader_init_on_login_fail_title": "Vérification du lecteur",
+    "card_reader_init_on_login_fail_message": "Lecteur non détecté",
+
+    "mail"               : "mail",
+    "tel"                : "tel",
+    "and_or"             : "et/ou",
+    "type_in_your_email" : "Les données renseignées ne sont pas conservées",
+    "coord_send_ticket"  : "Coordonnées pour envoi",
+    "type_in_your_coord" : "Les données renseignées ne sont pas conservées",
+
+    "my_dashboard" : "Moi",
+    "my_company_dashboard" : "Ma boutique",
+
     /* Categories */
     "categories" : "Catégories",
     "sort_categories" : "Trier les catégories",
@@ -55,7 +73,7 @@
 
     /* Available languages */
     "fr" : "Français",
-    "en" : "English", 
+    "en" : "English",
 
     /* GAMS */
     "companions" : "Lecteurs",
@@ -73,12 +91,15 @@
     "payment" : "Paiement",
     "payments" : "Paiements",
     "total_amount_cart" : "Total du panier",
-    "discount" : "Remise",
+    
+    "validate_discount": "Appliquer",
+    "configure_discount": "Remise",
+
     "discount_of" : "Remise de",
     "to_pay" : "A payer",
     "to_checkout" : "A encaisser",
     "not_available_offline" : "(non disponible hors ligne)",
-    "payment_device_init" : "Init lecteur...",
+    "payment_device_init" : "Mise à jour de mon lecteur",
     "cash" : "Espèces",
     "bank_card" : "CB",
     "remainder" : "Restant dû",
@@ -94,16 +115,16 @@
     "payment_mode_deletion_question" : 'Êtes-vous sûr de vouloir supprimer définitivement \'<b>{{payment_mode_name}}</b>\' ?',
     "delete_cart" : "Supprimer panier",
     "delete_cart_confirmation" : "Êtes-vous certain de vouloir supprimer tous les articles de votre panier?",
-    "quit_payment_mode_edition" : "Quitter l'édition", 
+    "quit_payment_mode_edition" : "Quitter l'édition",
     "quit_payment_mode_edition_confirmation" : "Voulez vous vraiment quitter l'édition du moyen de paiement",
     "payment_error_no_discount" : "Le champs 'Remise (€)' est requis",
     "payment_error_invalid_discount" : "Le champs 'Remise (%)' est requis et doit être inférieur ou égal à 100 %",
     "payment_error_discount_too_great" : "Vous ne pouvez pas remiser plus que le total à payer",
     "payment_error_no_cash" : "Veuillez saisir le montant reçu",
     "payment_error_not_enough_cash": "Le montant reçu doit être égal ou supérieur au montant à encaisser",
-    "payment_title_ticket_cb" : "Ticket CB",
-    "payment_popup_coord_title_email" : "Ticket d’achat par mail",
-    "payment_popup_coord_title_tel" : "Ticket CB par SMS :",
+    "payment_title_ticket_cb" : "Résultat du paiement carte",
+    "payment_popup_coord_title_email" : "Ticket client par mail",
+    "payment_popup_coord_title_tel" : "Ticket CB par SMS",
 
     /* Units */
     "units" : "Unités",
@@ -119,7 +140,7 @@
     "unit_deletion_move" : 'Êtes vous sûr de vouloir supprimer définitivement l\'unité <b>\"{{unit_name}}\"</b> et assigner \"unité\" aux articles associés',
     "unit_deletion_empty" : 'Êtes vous sûr de vouloir supprimer définitivement l\'unité <b>\"{{unit_name}}\"</b>',
     "associate_unit" : 'Assigner \"unité\" aux articles associés',
-    "quit_unit_edition" : "Quitter l'édition", 
+    "quit_unit_edition" : "Quitter l'édition",
     "quit_unit_edition_confirmation" : "Voulez vous vraiment quitter l'édition de l'unité",
 
     /* Cart */
@@ -142,10 +163,10 @@
     "forgotten_password_question" : "Mot de passe oublié ?",
     "email" : "Email",
     "request_new_password" : "Demander un nouveau mot de passe",
-    "new_password_sent" : "Un SMS avec votre nouveau mot de passe va vous être envoyé",
-    "password_changed" : "Votre mot de passe a bien été changé",
+    "new_password_sent" : "Un mot de passe provisoire vient de vous être envoyé par SMS",
+    "password_changed" : "Mot de passe changé",
     "incorrect_credentials" : "Votre identifiant ou votre mot de passe est erroné",
-    "unknown_error" : 'Une erreur inconnu est survenue: ',
+    "unknown_error" : 'Une erreur inconnue est survenue: ',
     "cannot_reinit_password" : "Votre mot de passe ne peut être réinitialisé",
     "connection_error" : "Verifier l'etat de votre réseau et connectez-vous à nouveau",
 
@@ -158,8 +179,13 @@
     "message" : "Message",
     "contact" : "Contact",
     "email_no_message" : "Veuillez saisir votre message avant d'envoyer.",
-    "message_sent" : "Message envoyé",
-    "message_sent_success" : "Votre message a été envoyé avec succès",
+
+    "message_sent_title_success" : "Message envoyé",
+    "message_sent_text_success" : "Votre message a été envoyé avec succès",
+
+    "message_sent_title_error" : "Message non envoyé",
+    "message_sent_text_error" : "Votre message n'a pas pu être envoyé",
+
     "contact_email" : "support.letspay@sfr.fr",
     "contact_phone" : "0805777575",
 
@@ -186,10 +212,10 @@
     "cashing" : "Encaissement",
     "amount" : "Montant",
     "refund_mean" : "Moyen de remboursement",
-    
+
     /* Transactions */
     "bank_card_transaction" : "Transaction par carte bancaire...",
-    "my_transaction" : "Ma transaction",
+    "my_transaction" : "Mon opération",
     "cancel_transaction_confirmation" : "Voulez-vous vraiment quitter ?",
     "cancel_transaction_warning" : 'Annuler une transaction n\'annule pas les paiements qui ont déjà été effectués',
     "transaction_validated" : "Transaction validée",
@@ -199,7 +225,7 @@
     "crop_image" : "Redimensionnement de l'image",
 
     /* Locking */
-    "locking" : "Verrouillage",
+    "locking" : "Verrouiller",
     "locking_delay" : "Verrouillage au bout de",
     "minute" : "min",
 
@@ -229,11 +255,12 @@
 
     /* Connection */
     "connection_lost" : 'Connexion perdue',
-    "connection_back_up" : 'Connexion rétablie', 
+    "connection_back_up" : 'Connexion rétablie',
 
     /* Actions */
     "accept" : "Accepter",
     "cancel" : "Annuler",
+    "abandon" : "Abandon",
     "close" : "Fermer",
     "filter" : "Filtrer",
     "search" : "Recherche",
@@ -263,9 +290,6 @@
 
     // No category
     "summary_ticket"                         : "Récapitulatif d’achat",
-    "send_ticket"                            : "Envoi du ticket",
-    "type_in_your_email"                     : "Veuillez renseigner votre adresse email",
-    "type_in_your_coord"                     : "Veuillez renseigner vos coordonnées",
     "handwritten_ticket"                     : "Ticket manuscrit",
     "authentication_required"                : "Veuillez vous authentifier",
     "type_in_your_password"                  : "Veuillez renseigner votre mot de passe",
@@ -282,7 +306,7 @@
     "field_required_REFUND_PAYMENTMETHOD"    : "Champ 'méthode de paiement' requis",
     "field_required_REFUND_PAYMENTMODE_NAME" : "Champ 'nom' requis",
     "no_transaction_found"                   : "Aucune transaction trouvée",
-	
+
 	//Error Manager
         //login
     "errorManager_login_0"                  : "Connexion réussie",
@@ -299,7 +323,7 @@
     "errorManager_login_104"                    : "Une erreur inconnue est survenue (code 104)",
     "errorManager_login_105"                    : "Une erreur inconnue est survenue (code 105)",
     "errorManager_login_200"                    : "Une erreur inconnue est survenue (code 200)",
-     
+
         //login
     "errorManager_change_password_0"                    : "Mot de passe changé",
     "errorManager_change_password_1"                    : "Une erreur inconnue est survenue (code 1)",
@@ -315,7 +339,7 @@
     "errorManager_change_password_104"                  : "Votre mot de passe doit contenir au moins une lettre et au moins un chiffre (code 104)",
     "errorManager_change_password_105"                  : "Mot de passe déjà utilisé précédemment (code 105)",
     "errorManager_change_password_200"                  : "Une erreur inconnue est survenue (code 200)",
-	
+
 	"end": "merci"
 };
 

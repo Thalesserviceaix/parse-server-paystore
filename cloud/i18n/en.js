@@ -1,7 +1,7 @@
 ﻿﻿var i18n = {
- 
+
     /* Articles */
-    "my_articles" : "My articles"
+      "my_articles" : "My articles"
     , "sort_articles" : "Sort the articles"
     , "filter_articles" : "Filter the articles"
     , "articles" : "Articles"
@@ -22,14 +22,32 @@
     , "description" : "Description"
     , "article_image" : "Image of the article"
     , "article_deletion" : "Remove an article"
-    , "article_deletion_question": "Confirm the removal" 
+    , "article_deletion_question": "Confirm the removal"
     , "add_article" : "Add an article"
     , "quit_article_edition" : "Leave the edition mode"
     , "quit_article_edition_confirmation" : "Confirm the exit of the edit mode"
     , "picture_edition" : "Edit a picture"
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
- 
+
+    , "card_reader_question_modal_title": "Attention required"
+
+    , "cardreader_init_title": "Checking card reader"
+    , "cardreader_verify_title": "Checking card reader"
+
+    , "card_reader_init_on_login_fail_title": "Checking cardreader"
+    , "card_reader_init_on_login_fail_message": "Reader not connected"
+
+    , "mail"               : "mail"
+    , "tel"                : "sms"
+    , "and_or"             : "and/or"
+    , "type_in_your_email" : "Information will not be stored"
+    , "coord_send_ticket"  : "Billing information"
+    , "type_in_your_coord" : "Information will not be stored"
+
+    , "my_dashboard" : "Me"
+    , "my_company_dashboard" : "My company"
+
     /* Categories */
     , "categories" : "Categories"
     , "sort_categories" : "Sort the categories"
@@ -45,23 +63,23 @@
     , "delete_associated_articles" : "Remode the associated articles"
     , "quit_category_edition" : "Exit the edit mode"
     , "quit_category_edition_confirmation" : "Confirm the exit of the edit mode"
- 
+
     /* Parameters */
     , "parameters" : "Parameters"
     , "application_lock" : "Lock the application"
     , "company_image" : "Company picture"
     , "manage_companions" : "Manage my smart card reader"
     , "language" : "Application language"
- 
+
     /* Available languages */
     , "fr" : "French"
     , "en" : "English (U.K.)"
- 
+
     /* GAMS */
     , "companions" : "Smart card readers"
     , "no_paired_device" : "No coupled smart card"
     , "service_unavailable" : "Unvailable service"
- 
+
     /* Payment */
     , "payment_modes" : "Modes of payment"
     , "payment_mode" : "Mode of payment"
@@ -73,12 +91,15 @@
     , "payment" : "Payment"
     , "payments" : "Payments"
     , "total_amount_cart" : "Total amount of the cart"
-    , "discount" : "Discount"
+
+    , "validate_discount": "Apply"
+    , "configure_discount": "Discount"
+
     , "discount_of" : "Discount of"
     , "to_pay" : "To pay"
     , "to_checkout" : "To checkout"
     , "not_available_offline" : "Not available in offline mode"
-    , "payment_device_init" : "Init terminal..."
+    , "payment_device_init" : "Update my card reader"
     , "cash" : "Cash"
     , "bank_card" : "Cartes bancaires"
     , "remainder" : "Remaining of the umount"
@@ -96,12 +117,16 @@
     , "delete_cart_confirmation" : "Confirm removal the contents of the cart"
     , "quit_payment_mode_edition" : "Exit the edit mode"
     , "quit_payment_mode_edition_confirmation" : "Confirm the exit of the edit mode"
+
     , "payment_error_no_discount" : "Le champs 'Remise (€)' est requis"
     , "payment_error_invalid_discount" : "A discount inferior or equal at 100 % is mandatory"
     , "payment_error_discount_too_great" : "The discount must be lower than the amount"
     , "payment_error_no_cash" : "Enter the received amount"
     , "payment_error_not_enough_cash": "The received amount must be lower than the umount to collect"
- 
+    , "payment_title_ticket_cb" : "Card payment result"
+    , "payment_popup_coord_title_email" : "Card ticket by email"
+    , "payment_popup_coord_title_tel" : "Card ticket by text :"
+
     /* Units */
     , "units" : "units"
     , "sort_units" : "Sort units"
@@ -118,7 +143,7 @@
     , "associate_unit" : "Missing translation"
     , "quit_unit_edition" : "Exit the edit mode"
     , "quit_unit_edition_confirmation" : "Confirm the exit of the edit mode"
- 
+
     /* Cart */
     , "cart" : "My cart"
     , "quantity" : "Quantity"
@@ -126,7 +151,7 @@
     , "euro_price" : "Euro price"
     , "in_units" : "In units"
     , "taxes_included" : "Taxes included"
- 
+
     /* Users and passwords */
     , "change_password" : "Change password"
     , "temporary_password" : "You must change your temporary password"
@@ -145,7 +170,7 @@
     , "unknown_error" : "Unknown error"
     , "cannot_reinit_password" : "Problem with the reinit of your password"
     , "connection_error" : "Network connection error"
- 
+
     /* Contact */
     , "contact_us" : "Contact us"
     , "phone_contact" : "Phone contact"
@@ -154,11 +179,16 @@
     , "message" : "Message"
     , "contact" : "Contact"
     , "email_no_message" : "Complete your message before sending"
-    , "message_sent" : "Message sent"
-    , "message_sent_success" : "Your message has been sent with success"
+
+    , "message_sent_title_success" : "Message sent"
+    , "message_sent_text_success" : "Your message has been sent with success"
+
+    , "message_sent_title_error" : "Message not sent"
+    , "message_sent_text_error" : "Your message couldn't be sent"
+
     , "contact_email" : "support.letspay@sfr.fr"
     , "contact_phone" : "0805777575"
- 
+
     /* Dashboard */
     , "my_activity" : "My activity"
     , "day" : "Day"
@@ -179,10 +209,10 @@
     , "credit" : "Credit"
     , "cancellation" : "Cancel a payment"
     , "refund" : "Refund a customer"
-    , "cashing" : "Cash a customer" 
+    , "cashing" : "Cash a customer"
     , "amount" : "Amount"
     , "refund_mean" : "Refund mean"
-     
+
     /* Transactions */
     , "bank_card_transaction" : "Payment by credit card"
     , "my_transaction" : "My business operation"
@@ -190,46 +220,47 @@
     , "cancel_transaction_warning" : "For this amount, all the payment already realized will be retain"
     , "transaction_validated" : "Payment succeed"
     , "transaction_error" : "Problem during the payment"
- 
+
     /* Cropping */
     , "crop_image" : "Picture resizing"
- 
+
     /* Locking */
     , "locking" : "Automatic application locking"
     , "locking_delay" : "Locking delay"
     , "minute" : "Minute"
- 
+
     /* FAQ */
     , "faq" : "FAQ"
- 
+
     /* Menu and message */
     , "application_locked" : "Application is locked. Please log in first"
     , "lost_connection" : "Dropped connection"
     , "my_shop" : "My shop"
     , "support" : "Support cell"
- 
+
     /* Options */
     , "options" : "Options"
     , "deconnection" : "Deconnexion"
- 
+
     /* Misc */
     , "yes": "Yes"
     , "no" : "No"
- 
+
     /* Receipt */
     , "receipt" : "Receipt"
     , "handwritten_receipt" : "Hand credit card receipt"
     , "no_receipt" : "No credit card receipt"
     , "sending_receipt" : "Send the receipt"
     , "missing_email_address" : "Enter your email"
- 
+
     /* Connection */
     , "connection_lost" : "Connection lost"
     , "connection_back_up" : "Connection restored"
- 
+
     /* Actions */
     , "accept" : "Accept"
     , "cancel" : "Cancel"
+    , "abandon" : "Abandon"
     , "close" : "Clode"
     , "filter" : "Filter"
     , "search" : "Search"
@@ -259,9 +290,6 @@
 
     // No category
     "summary_ticket"                         : "Purchase summary",
-    "send_ticket"                            : "Send ticket",
-    "type_in_your_email"                     : "Please fill in your email",
-    "type_in_your_coord"                     : "Please fill in your coordinates",
     "handwritten_ticket"                     : "Handwritten ticket",
     "authentication_required"                : "Authentication required",
     "type_in_your_password"                  : "Please fill in your password",
@@ -278,7 +306,7 @@
     "field_required_REFUND_PAYMENTMETHOD"    : "'payment method' field required",
     "field_required_REFUND_PAYMENTMODE_NAME" : "'name' field required",
     "no_transaction_found"                   : "Transaction not found",
-	
+
 	//Error Manager
         //login
     "errorManager_login_0"                  : "Access successfull",
@@ -295,7 +323,7 @@
     "errorManager_login_104"                    : "Unknown error (code 104)",
     "errorManager_login_105"                    : "Unknown error (code 105)",
     "errorManager_login_200"                    : "Unknown error (code 200)",
-     
+
         //login
     "errorManager_change_password_0"                    : "Change successfull",
     "errorManager_change_password_1"                    : "Unknown error (code 1)",
@@ -311,7 +339,7 @@
     "errorManager_change_password_104"                  : "Your password must contain at least one letter and at least one number (code 104)",
     "errorManager_change_password_105"                  : "Password already used previously (code 105)",
     "errorManager_change_password_200"                  : "Unknown error (code 200)",
-	
+
 	"end": "merci"
 };
 
