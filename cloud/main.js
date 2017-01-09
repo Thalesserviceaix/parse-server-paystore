@@ -4,8 +4,10 @@ var md5 = require("./md5.js");
 var _ = require('underscore');
 var fs = require('fs');
 var Mailgun = require('mailgun-js')({
-    apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
-    domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+    // apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
+    // domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+    apiKey: 'key-c7e35a4463a8358ced4659702b81ec94',
+    domain: 'sandbox8c522fdd4e764c9db4d59a03d9358ec4.mailgun.org'
 });
 var moment = require('moment');
 
