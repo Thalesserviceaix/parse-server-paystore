@@ -6,51 +6,31 @@
         _getLongUrl: function (resourceName) {
             return self._serviceURL + resourceName;
         },
+
         getCommonHeaders: function () {
             return {
                 "Content-Type": "application/json;charset=utf-8"
             };
         },
-        getAuthenticatedHeaders: function () {
+
+        getAuthenticatedHeaders: function ( sessionID ) {
             return {
                 "Content-Type": "application/json;charset=utf-8",
-                "SESSIONID"   : this.getSessionId()
+                "SESSIONID"   : sessionID
             };
         },
 
-        _sessionId: null,
-        setSessionId: function (id) {
-            this._sessionId = id;
-        },
-        getSessionId: function () {
-            return this._sessionId;
-        },
-
-        // on transgresse la regle de ne pas stoker le mot de passe dand la session....
+        // On stocke l'identifiant permettant d'accéder au service Mail de Monext
         _password: null,
-        setPassword: function (password) {
-            this._password = password;
-        },
         getPassword: function () {
             return 'Admin007&'; //this._password;
         },
 
         _userName: null,
-        setUserName: function (userName) {
-            this._userName = userName;
-        },
         getUserName: function () {
             return 'blc2@monex.net'; //this._userName;
         },
 
-        _tmpPassword : false,
-        setTmpPassword : function(isTmp) {
-            this._tmpPassword = isTmp;
-        },
-        isTmpPassword : function() {
-            return this._tmpPassword;
-        },
-        
         User: {
             // Return a Parse.Promise resolved resolved as a the typical monext response
             login: function (username, password) {
@@ -67,23 +47,17 @@
                     console.log("Monext/DoLogin:");
                     console.log(monextResponse);
                     console.log("-----");
-                    
 
-                    self.setSessionId(monextResponse.headers.sessionid);
-                    self.setUserName(username);
-                    self.setPassword(password);
-                    self.setTmpPassword(monextResponse.data.IsTemporaryPassword);
-
-                    return monextResponse.data;
+                    return monextResponse;
                 });
 
             },
 
-            findByRef: function (userRef) {
+            findByRef: function (userRef, sessionId) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
                     useMasterKey : true,
-                    headers: self.getAuthenticatedHeaders(),
+                    headers: self.getAuthenticatedHeaders( sessionId ),
                     body: {
                         "UserRef": userRef
                     },
@@ -134,10 +108,10 @@
         },
 
         Merchant: {
-            findByRef: function (merchantRef) {
+            findByRef: function (merchantRef, sessionId ) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
-                    headers: self.getAuthenticatedHeaders(),
+                    headers: self.getAuthenticatedHeaders( sessionId ),
                     body: {
                         "MerchantRef": merchantRef
                     },
@@ -163,10 +137,9 @@
                     },
                     url: self._getLongUrl("DoLogin")
                 }).then(function (monextResponse) {
-		    self.setSessionId(monextResponse.headers.sessionid);
                     return Parse.Cloud.httpRequest({
             			method: "POST",
-            			headers: self.getAuthenticatedHeaders(),
+            			headers: self.getAuthenticatedHeaders( monextResponse.headers.sessionid ),
             			body: params,
             			url: self._getLongUrl("SendEmailTicketCaisse")
                     }).then(function (monextResponse) {
@@ -186,14 +159,14 @@
 
         Transaction: {
             addKioskTransaction: function(usermane, password, kioskTransaction) {
-                // TODO : modify login
-                //return MonextAPI.User.login('john_hom@test.fr', 'John123!').then(function(monextResponse) {
+                var sessionId;
                 return MonextAPI.User.login(usermane, password).then(function(monextResponse) {
-                    if (monextResponse.Code !== 0) {
+                    if (monextResponse.data.Code !== 0) {
                         console.log("Monext rejected the user");
                         return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.Code});
                     }
-                    return MonextAPI.User.findByRef(monextResponse.UserRef);
+                    sessionId = monextResponse.headers.sessionid ;
+                    return MonextAPI.User.findByRef(monextResponse.data.UserRef, sessionId);
                 }).then(function (monextResponse) {
                     if (monextResponse.Users.length < 1) {
                         console.log("Monext couldnt find user");
@@ -202,7 +175,7 @@
                     kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
                     kioskTransaction.Login       = monextResponse.Users[0].Email;
                     kioskTransaction.MerchantRef = monextResponse.Users[0].MerchantRef;
-                    return MonextAPI.Merchant.findByRef(kioskTransaction.MerchantRef);
+                    return MonextAPI.Merchant.findByRef(kioskTransaction.MerchantRef, sessionId);
 
                 }).then(function(monextResponse) {
                     kioskTransaction.DistributorMerchantContract = monextResponse.DistributorMerchantContract;
@@ -214,7 +187,7 @@
 
                     return Parse.Cloud.httpRequest({
                         method: "POST",
-                        headers: self.getAuthenticatedHeaders(),
+                        headers: self.getAuthenticatedHeaders(sessionId),
                         body: kioskTransaction,
                         url: self._getLongUrl("AddKioskTransaction")
                     });

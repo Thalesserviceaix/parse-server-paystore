@@ -13,6 +13,8 @@ var moment = require('moment');
 var fr = require('./i18n/fr');
 var en = require('./i18n/en');
 
+var _logger = require('parse-server/lib/logger')
+
 Parse.Cloud.define("checkauth", function (request, response) {
     if (!request.params.username || !request.params.password) {
         console.log("Missing parameters");
@@ -28,19 +30,19 @@ Parse.Cloud.define("checkauth", function (request, response) {
     var nepToken = null;
 
     return MonextAPI.User.login(username, password).then(function (response) {
-        if (response.Code !== 0) {
+        if (response.data.Code !== 0) {
             console.log("Monext rejected the user");
-            return Parse.Promise.error({message: "Monext rejected the user", code: response.Code});
+            return Parse.Promise.error({message: "Monext rejected the user", code: response.data.Code});
         }
         console.log("Monext accepted the user");
         console.log("checkauth | login | then",response);
-        console.log(response.Code);
-        console.log(response.NepToken);
-        nepToken = response.NepToken
-        console.log(response.NepTokenExpirationTime);
+        console.log(response.data.Code);
+        console.log(response.data.NepToken);
+        nepToken = response.data.NepToken
+        console.log(response.data.NepTokenExpirationTime);
         console.log("checkauth | login | then | end");
 
-        return response.UserRef;
+        return response.data.UserRef;
     }).then(function (userRef) {
         return new Parse.Query("_User").equalTo("username", username).first({useMasterKey: true})
     }).then(function (user) {
@@ -92,9 +94,9 @@ Parse.Cloud.define("change_password", function (request, response) {
     }
 
     return MonextAPI.User.login(username, password).then(function (monextResponse) {
-        if (monextResponse.Code !== 0) {
+        if (monextResponse.data.Code !== 0) {
             console.log("Monext rejected the user");
-            return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.Code});
+            return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.data.Code});
         }
         return MonextAPI.User.modifyPassword(username, password, newPassword).then(function (monextResponse) {
             response.success(monextResponse)
@@ -113,11 +115,12 @@ Parse.Cloud.define("resetpassword", function (request, response) {
     var username = request.params.username;
 
     return MonextAPI.User.resetPassword(username).then(function (monextResponse) {
+        console.log("RESET pwd: monextResponse code = " + monextResponse.Code);
         if (monextResponse.Code === 0) {
-            return response.success();
+            return response.success(monextResponse.Code);
         }
 
-        return response.error();
+        return response.error(monextResponse.Code);
     });
 });
 
@@ -179,7 +182,10 @@ Parse.Cloud.define("dashboard_transactions_users", function (request, response) 
 
 /****** MARCEL *******/
 Parse.Cloud.define("add_kiosk_transaction", function (request, response) {
+
     console.log("BEGIN add_kiosk_transaction")
+    _logger.logger.info('Paystore - add_kiosk_transaction - Entree - ID = ' + request.params.kioskTransaction.IdKioskTransaction + ' Montant = ' + request.params.kioskTransaction.Montant);
+
 
     var username = request.params.username;
     var password = request.params.password;
@@ -190,13 +196,19 @@ Parse.Cloud.define("add_kiosk_transaction", function (request, response) {
 
     return MonextAPI.Transaction.addKioskTransaction(username, password, kioskTransaction).then(function (monextResponse) {
         if (monextResponse.data.Code === 0) {
-            return response.success();
+            _logger.logger.info('Paystore - add_kiosk_transaction - OK - ID = '  + request.params.kioskTransaction.IdKioskTransaction  );
+            return response.success(request.params.kioskTransaction.IdKioskTransaction);
         }
+
+        _logger.logger.info('Paystore - add_kiosk_transaction - KO1 - ID = ' + request.params.kioskTransaction.IdKioskTransaction);
         console.log("ERROR-add_kiosk_transaction")
         console.log(monextResponse)
         console.log("'----'")
         return response.error();
+
     }).fail(function (error) {
+        _logger.logger.info('Paystore - add_kiosk_transaction - KO2 - ID = ' + request.params.kioskTransaction.IdKioskTransaction);
+
         return response.error(error);
     });
 });
@@ -214,22 +226,26 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
 
     // Monext test user : { Login: 'USR1111', Password: 'Usr1111!!!' }
     var nepToken = null;
-
+    var sessionId ;
+    var tmpPassword;
 
     return MonextAPI.User.login(username, password).then(function (response) {
-        if (response.Code !== 0) {
+        if (response.data.Code !== 0) {
             console.log("Monext rejected the user");
-            return Parse.Promise.error({message: "Monext rejected the user", code: response.Code});
+            return Parse.Promise.error({message: "Monext rejected the user", code: response.data.Code});
         }
+        sessionId = response.headers.sessionid ;
+        tmpPassword = response.data.IsTemporaryPassword;
+
         console.log("Monext accepted the user");
-        nepToken = response.NepToken;
-        return response.UserRef;
+        nepToken = response.data.NepToken;
+        return response.data.UserRef;
     }).then(function (userRef) {
-        return MonextAPI.User.findByRef(userRef);
+        return MonextAPI.User.findByRef(userRef, sessionId);
     }).then(function (monextUser) {
         return Parse.Promise.when([
             Parse.Promise.as(monextUser),
-            MonextAPI.Merchant.findByRef(monextUser.Users[0].MerchantRef)
+            MonextAPI.Merchant.findByRef(monextUser.Users[0].MerchantRef, sessionId)
         ]);
     }).then(function (data) {
         var monextUser = data[0];
@@ -340,7 +356,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
             });
         };
 
-        var findOrCreateUser = function (params) {
+        var findOrCreateUser = function (params, isTmpPassword ) {
             console.log('>findOrCreateUser');
             var params = params || {}
 
@@ -351,7 +367,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
             return new Parse.Query("_User").equalTo("username", username).first({useMasterKey: true}).then(function (user) {
 
 
-                console.log("findOrCreateUser | tmp pwd? " + MonextAPI.isTmpPassword());
+                console.log("findOrCreateUser | tmp pwd? " + isTmpPassword);
                 var h = md5.hex_md5(firstname+lastname);
                 var randomPassword = 'c635e8b836f4eab4a029e2787e59e6fb'+h;
                 if (user) {
@@ -362,7 +378,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
                     user.set("password", randomPassword);
                     user.set("firstname", firstname);
                     user.set("lastname", lastname);
-                    user.set("tmpPassword", MonextAPI.isTmpPassword());
+                    user.set("tmpPassword", isTmpPassword);
                     console.log('findOrCreateUser | found user | nepToken to be saved: ', nepToken);
                     user.set("nepToken", nepToken);
 
@@ -384,7 +400,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
                     newUser.set("password", randomPassword);
                     newUser.set("firstname", firstname);
                     newUser.set("lastname", lastname);
-                    newUser.set("tmpPassword", MonextAPI.isTmpPassword());
+                    newUser.set("tmpPassword", isTmpPassword);
                     console.log('findOrCreateUser | created user | nepToken to be saved: ', nepToken);
                     newUser.set("nepToken", nepToken);
 
@@ -424,7 +440,7 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
                 username: username,
                 firstname: monextUser.Users[0].FirstName,
                 lastname: monextUser.Users[0].LastName
-            }).then(function (user) {
+            }, tmpPassword ).then(function (user) {
                 console.log('findOrCreateUser | then', user);
                 var monextRole = monextUser.Users[0].AccreditationProfile;
 
