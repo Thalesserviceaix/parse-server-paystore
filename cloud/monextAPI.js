@@ -70,7 +70,7 @@
                     return user.data
                 });
             },
-            // Return a Parse.Promise resolved as a boolean (true if password was reset, false otherwise)
+            // Return a Parse.Promise resolved as a boolean (true if password was resetreset, false otherwise)
             resetPassword: function (username) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
@@ -173,7 +173,7 @@
                         return Parse.Promise.error({message: "Monext couldnt find user", code: monextResponse.Code});
                     }
                     kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
-                    kioskTransaction.Login       = monextResponse.Users[0].Email;
+                    kioskTransaction.Login       = monextResponse.Users[0].Login;
                     kioskTransaction.MerchantRef = monextResponse.Users[0].MerchantRef;
                     return MonextAPI.Merchant.findByRef(kioskTransaction.MerchantRef, sessionId);
 
