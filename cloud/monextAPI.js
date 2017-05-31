@@ -1,4 +1,4 @@
-﻿var MonextAPI = (function () {
+var MonextAPI = (function () {
     var self;
     return self = {
         _serviceURL: "https://homo.paystore-online.com/ws/services/",
@@ -70,7 +70,7 @@
                     return user.data
                 });
             },
-            // Return a Parse.Promise resolved as a boolean (true if password was resetreset, false otherwise)
+            // Return a Parse.Promise resolved as a boolean (true if password was reset, false otherwise)
             resetPassword: function (username) {
                 return Parse.Cloud.httpRequest({
                     method: "POST",
@@ -165,6 +165,7 @@
                         console.log("Monext rejected the user");
                         return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.Code});
                     }
+		    console.log("MonextAPI.User.login: monextResponse = " + JSON.stringify(monextResponse));
                     sessionId = monextResponse.headers.sessionid ;
                     return MonextAPI.User.findByRef(monextResponse.data.UserRef, sessionId);
                 }).then(function (monextResponse) {
@@ -172,7 +173,11 @@
                         console.log("Monext couldnt find user");
                         return Parse.Promise.error({message: "Monext couldnt find user", code: monextResponse.Code});
                     }
-                    kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
+                    console.log("monextResponse.Users[0].Login = " + monextResponse.Users[0].Login);
+	            console.log("monextResponse.Users[0].Email = " + monextResponse.Users[0].Email);
+		    console.log("MonextAPI.User.findByRef: monextResponse = " + JSON.stringify(monextResponse));
+		    kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
+                    // kioskTransaction.Login       = monextResponse.Users[0].Email;
                     kioskTransaction.Login       = monextResponse.Users[0].Login;
                     kioskTransaction.MerchantRef = monextResponse.Users[0].MerchantRef;
                     return MonextAPI.Merchant.findByRef(kioskTransaction.MerchantRef, sessionId);
@@ -203,3 +208,4 @@
 })();
 
 module.exports = MonextAPI;
+

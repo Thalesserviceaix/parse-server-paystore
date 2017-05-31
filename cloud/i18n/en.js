@@ -1,7 +1,7 @@
 ﻿﻿var i18n = {
 
     /* Articles */
-    "my_articles" : "My articles"
+      "my_articles" : "My articles"
     , "sort_articles" : "Sort the articles"
     , "filter_articles" : "Filter the articles"
     , "articles" : "Articles"
@@ -30,11 +30,13 @@
     , "album" : "Picture book"
     , "take_picture" : "Take a picture"
 
+    , "card_reader_question_modal_title": "Attention required"
+
     , "cardreader_init_title": "Checking card reader"
     , "cardreader_verify_title": "Checking card reader"
 
-    , "card_reader_init_on_login_fail_title": "Error"
-    , "card_reader_init_on_login_fail_message": "Couldn't initialize the cardreader"
+    , "card_reader_init_on_login_fail_title": "Checking cardreader"
+    , "card_reader_init_on_login_fail_message": "Reader not connected"
 
     , "mail"               : "mail"
     , "tel"                : "sms"
@@ -89,7 +91,10 @@
     , "payment" : "Payment"
     , "payments" : "Payments"
     , "total_amount_cart" : "Total amount of the cart"
-    , "discount" : "Discount"
+
+    , "validate_discount": "Apply"
+    , "configure_discount": "Discount"
+
     , "discount_of" : "Discount of"
     , "to_pay" : "To pay"
     , "to_checkout" : "To checkout"
@@ -174,8 +179,13 @@
     , "message" : "Message"
     , "contact" : "Contact"
     , "email_no_message" : "Complete your message before sending"
-    , "message_sent" : "Message sent"
-    , "message_sent_success" : "Your message has been sent with success"
+
+    , "message_sent_title_success" : "Message sent"
+    , "message_sent_text_success" : "Your message has been sent with success"
+
+    , "message_sent_title_error" : "Message not sent"
+    , "message_sent_text_error" : "Your message couldn't be sent"
+
     , "contact_email" : "support.letspay@sfr.fr"
     , "contact_phone" : "0805777575"
 
@@ -250,6 +260,7 @@
     /* Actions */
     , "accept" : "Accept"
     , "cancel" : "Cancel"
+    , "abandon" : "Abandon"
     , "close" : "Clode"
     , "filter" : "Filter"
     , "search" : "Search"

@@ -96,7 +96,7 @@ Parse.Cloud.define("change_password", function (request, response) {
     return MonextAPI.User.login(username, password).then(function (monextResponse) {
         if (monextResponse.data.Code !== 0) {
             console.log("Monext rejected the user");
-            return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.data.Code});
+            return Parse.Promise.error({message: "Monext rejected the user", data:{code: monextResponse.data.Code}});
         }
         return MonextAPI.User.modifyPassword(username, password, newPassword).then(function (monextResponse) {
             response.success(monextResponse)
@@ -115,7 +115,7 @@ Parse.Cloud.define("resetpassword", function (request, response) {
     var username = request.params.username;
 
     return MonextAPI.User.resetPassword(username).then(function (monextResponse) {
-        console.log("RESET pwd: monextResponse code = " + monextResponse.Code);
+	 console.log('Reponse Monext : ' + monextResponse.Code);
         if (monextResponse.Code === 0) {
             return response.success(monextResponse.Code);
         }
@@ -1003,4 +1003,5 @@ Parse.Cloud.afterSave('TransactionCredit', function (request) {
         console.log(error);
     });
 });
+
 

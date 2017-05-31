@@ -30,11 +30,13 @@
     "album" : "Album photos",
     "take_picture" : "Prendre une photo",
 
+    "card_reader_question_modal_title": "Attention requise",
+
     "cardreader_init_title": "Vérification du lecteur",
     "cardreader_verify_title": "Vérification du lecteur",
 
-    "card_reader_init_on_login_fail_title": "Erreur",
-    "card_reader_init_on_login_fail_message": "Impossible d'initialiser le lecteur",
+    "card_reader_init_on_login_fail_title": "Vérification du lecteur",
+    "card_reader_init_on_login_fail_message": "Lecteur non détecté",
 
     "mail"               : "mail",
     "tel"                : "tel",
@@ -89,7 +91,10 @@
     "payment" : "Paiement",
     "payments" : "Paiements",
     "total_amount_cart" : "Total du panier",
-    "discount" : "Remise",
+    
+    "validate_discount": "Appliquer",
+    "configure_discount": "Remise",
+
     "discount_of" : "Remise de",
     "to_pay" : "A payer",
     "to_checkout" : "A encaisser",
@@ -158,10 +163,10 @@
     "forgotten_password_question" : "Mot de passe oublié ?",
     "email" : "Email",
     "request_new_password" : "Demander un nouveau mot de passe",
-    "new_password_sent" : "Un SMS avec votre nouveau mot de passe va vous être envoyé",
-    "password_changed" : "Votre mot de passe a bien été changé",
+    "new_password_sent" : "Un mot de passe provisoire vient de vous être envoyé par SMS",
+    "password_changed" : "Mot de passe changé",
     "incorrect_credentials" : "Votre identifiant ou votre mot de passe est erroné",
-    "unknown_error" : 'Une erreur inconnu est survenue: ',
+    "unknown_error" : 'Une erreur inconnue est survenue: ',
     "cannot_reinit_password" : "Votre mot de passe ne peut être réinitialisé",
     "connection_error" : "Verifier l'etat de votre réseau et connectez-vous à nouveau",
 
@@ -174,8 +179,13 @@
     "message" : "Message",
     "contact" : "Contact",
     "email_no_message" : "Veuillez saisir votre message avant d'envoyer.",
-    "message_sent" : "Message envoyé",
-    "message_sent_success" : "Votre message a été envoyé avec succès",
+
+    "message_sent_title_success" : "Message envoyé",
+    "message_sent_text_success" : "Votre message a été envoyé avec succès",
+
+    "message_sent_title_error" : "Message non envoyé",
+    "message_sent_text_error" : "Votre message n'a pas pu être envoyé",
+
     "contact_email" : "support.letspay@sfr.fr",
     "contact_phone" : "0805777575",
 
@@ -215,7 +225,7 @@
     "crop_image" : "Redimensionnement de l'image",
 
     /* Locking */
-    "locking" : "Verrouillage",
+    "locking" : "Verrouiller",
     "locking_delay" : "Verrouillage au bout de",
     "minute" : "min",
 
@@ -250,6 +260,7 @@
     /* Actions */
     "accept" : "Accepter",
     "cancel" : "Annuler",
+    "abandon" : "Abandon",
     "close" : "Fermer",
     "filter" : "Filtrer",
     "search" : "Recherche",
