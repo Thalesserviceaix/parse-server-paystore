@@ -2,7 +2,7 @@ var MonextAPI = (function () {
     var self;
     return self = {
         _serviceURL: "https://homo.paystore-online.com/ws/services/",
-        //_serviceURL: "https://recette.paystore-online.com/ws/services/",
+        //_serviceURL: "https://paystore-online.com/ws/services/",
         _getLongUrl: function (resourceName) {
             return self._serviceURL + resourceName;
         },
@@ -137,23 +137,23 @@ var MonextAPI = (function () {
                     },
                     url: self._getLongUrl("DoLogin")
                 }).then(function (monextResponse) {
-                    return Parse.Cloud.httpRequest({
-            			method: "POST",
-            			headers: self.getAuthenticatedHeaders( monextResponse.headers.sessionid ),
-            			body: params,
-            			url: self._getLongUrl("SendEmailTicketCaisse")
-                    }).then(function (monextResponse) {
-            			console.log("Monext/Emission Ticket:");
-            			console.log(monextResponse);
-            			console.log("-----");
-            			callbacks.success(monextResponse);
-                    }, function (monextResponse) {
+                        return Parse.Cloud.httpRequest({
+                            method: "POST",
+                            headers: self.getAuthenticatedHeaders( monextResponse.headers.sessionid ),
+                            body: params,
+                            url: self._getLongUrl("SendEmailTicketCaisse")
+                        }).then(function (monextResponse) {
+                            console.log("Monext/Emission Ticket:");
+                            console.log(monextResponse);
+                            console.log("-----");
+                            callbacks.success(monextResponse);
+                        }, function (monextResponse) {
+                            callbacks.error(monextResponse);
+                        });
+                    },
+                    function (monextResponse) {
                         callbacks.error(monextResponse);
                     });
-                },
-                function (monextResponse) {
-                    callbacks.error(monextResponse);
-                });
             }
         },
 
@@ -165,7 +165,6 @@ var MonextAPI = (function () {
                         console.log("Monext rejected the user");
                         return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.Code});
                     }
-		    console.log("MonextAPI.User.login: monextResponse = " + JSON.stringify(monextResponse));
                     sessionId = monextResponse.headers.sessionid ;
                     return MonextAPI.User.findByRef(monextResponse.data.UserRef, sessionId);
                 }).then(function (monextResponse) {
@@ -173,12 +172,8 @@ var MonextAPI = (function () {
                         console.log("Monext couldnt find user");
                         return Parse.Promise.error({message: "Monext couldnt find user", code: monextResponse.Code});
                     }
-                    console.log("monextResponse.Users[0].Login = " + monextResponse.Users[0].Login);
-	            console.log("monextResponse.Users[0].Email = " + monextResponse.Users[0].Email);
-		    console.log("MonextAPI.User.findByRef: monextResponse = " + JSON.stringify(monextResponse));
-		    kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
-                    // kioskTransaction.Login       = monextResponse.Users[0].Email;
-                    kioskTransaction.Login       = monextResponse.Users[0].Login;
+                    kioskTransaction.UserRef     = monextResponse.Users[0].UserRef;
+                    kioskTransaction.Login       = monextResponse.Users[0].Email;
                     kioskTransaction.MerchantRef = monextResponse.Users[0].MerchantRef;
                     return MonextAPI.Merchant.findByRef(kioskTransaction.MerchantRef, sessionId);
 

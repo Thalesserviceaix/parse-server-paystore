@@ -3,9 +3,9 @@ var Utils = require("./utils");
 var md5 = require("./md5.js");
 var _ = require('underscore');
 var fs = require('fs');
-var Mailgun = require('mailgun-js')({
-    apiKey: 'key-ffff71fcee9784638da21c7f37207ab5',
-    domain: 'sandboxf01b5d36c43d4ed0ba2d37c1a3776f40.mailgun.org'
+var mailgun = require('mailgun-js')({
+    apiKey: 'key-c7e35a4463a8358ced4659702b81ec94',
+    domain: 'sandbox8c522fdd4e764c9db4d59a03d9358ec4.mailgun.org'
 });
 var moment = require('moment');
 
@@ -96,7 +96,7 @@ Parse.Cloud.define("change_password", function (request, response) {
     return MonextAPI.User.login(username, password).then(function (monextResponse) {
         if (monextResponse.data.Code !== 0) {
             console.log("Monext rejected the user");
-            return Parse.Promise.error({message: "Monext rejected the user", data:{code: monextResponse.data.Code}});
+            return Parse.Promise.error({message: "Monext rejected the user", code: monextResponse.data.Code});
         }
         return MonextAPI.User.modifyPassword(username, password, newPassword).then(function (monextResponse) {
             response.success(monextResponse)
@@ -115,7 +115,7 @@ Parse.Cloud.define("resetpassword", function (request, response) {
     var username = request.params.username;
 
     return MonextAPI.User.resetPassword(username).then(function (monextResponse) {
-	 console.log('Reponse Monext : ' + monextResponse.Code);
+        console.log('Reponse Monext : ' + monextResponse.Code);
         if (monextResponse.Code === 0) {
             return response.success(monextResponse.Code);
         }
@@ -393,6 +393,8 @@ Parse.Cloud.define("proxyauthter", function (request, res) {
                 }
 
                 console.log('findOrCreateUser | signUp');
+                console.log('username = ' + username);
+                console.log('randomPassword = ' + randomPassword);
                 return Parse.User.signUp(username, randomPassword).then(function (newUser) {
                     console.log("findOrCreateUser | created user");
                     console.log("findOrCreateUser | created user | newUser", newUser);
@@ -662,7 +664,7 @@ Parse.Cloud.define('SendEmail', function (request, response) {
                 city: contract.get('city')
             });
 
-            return Mailgun.sendEmail({
+            return mailgun.sendEmail({
                 to: to, // TODO insert real email
                 from: "postmaster@joeyrogues.com",
                 subject: "Ticket de caisse",
@@ -868,26 +870,31 @@ Parse.Cloud.define('SendContactEmail', function (request, response) {
         return;
     }
 
-    var template = fs.readFileSync('./templates/contact.js', 'utf8');
+    var template = fs.readFileSync('/home/ubuntu/parse-server-paystore/cloud/templates/contact.js', 'utf8');
     var template_to_compile = _.template(template);
     var html = template_to_compile({
         username: username,
         message: message
     });
 
-    return Mailgun.sendEmail({
+    var data = {
         to: to,
-        from: "postmaster@joeyrogues.com",
+        from: "marie.georget@monext.net",
         subject: subject,
         html: html
-    }, {
-        success: function (httpResponse) {
-            response.success('OK');
-        },
-        error: function (httpResponse) {
+    };
+
+    mailgun.messages().send(data, function (error, body) {
+        console.log(body);
+        if ( error ) {
+            console.error('SendMail: error');
             response.error(error);
         }
-    });
+        else
+        {
+            response.success('OK');
+        }});
+
 });
 
 var Transaction = require('./transaction');
@@ -956,7 +963,7 @@ Parse.Cloud.afterSave('TransactionCancel', function (request) {
 
         return Parse.Promise.when([
             TransactionCancel.updateDayView(updateParams),
-             TransactionCancel.updateDayViewAdmin(updateParams2)
+            TransactionCancel.updateDayViewAdmin(updateParams2)
         ]).then(function (dayRow) {
             console.log('success');
             console.log(dayRow);
