@@ -1,7 +1,7 @@
 ﻿﻿var i18n = {
 
     /* Articles */
-      "my_articles" : "My articles"
+    "my_articles" : "My articles"
     , "sort_articles" : "Sort the articles"
     , "filter_articles" : "Filter the articles"
     , "articles" : "Articles"
@@ -186,8 +186,8 @@
     , "message_sent_title_error" : "Message not sent"
     , "message_sent_text_error" : "Your message couldn't be sent"
 
-    , "contact_email" : "support.letspay@sfr.fr"
-    , "contact_phone" : "0805777575"
+    , "contact_email" : "paystore@arkea.com"
+    , "contact_phone" : "0810903264"
 
     /* Dashboard */
     , "my_activity" : "My activity"
@@ -307,8 +307,8 @@
     "field_required_REFUND_PAYMENTMODE_NAME" : "'name' field required",
     "no_transaction_found"                   : "Transaction not found",
 
-	//Error Manager
-        //login
+    //Error Manager
+    //login
     "errorManager_login_0"                  : "Access successfull",
     "errorManager_login_1"                  : "Unknown error (code 1)",
     "errorManager_login_2"                  : "Unknown error (code 2)",
@@ -324,7 +324,7 @@
     "errorManager_login_105"                    : "Unknown error (code 105)",
     "errorManager_login_200"                    : "Unknown error (code 200)",
 
-        //login
+    //login
     "errorManager_change_password_0"                    : "Change successfull",
     "errorManager_change_password_1"                    : "Unknown error (code 1)",
     "errorManager_change_password_2"                    : "Unknown error (code 2)",
@@ -340,7 +340,7 @@
     "errorManager_change_password_105"                  : "Password already used previously (code 105)",
     "errorManager_change_password_200"                  : "Unknown error (code 200)",
 
-	"end": "merci"
+    "end": "merci"
 };
 
 module.exports = i18n
